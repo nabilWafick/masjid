@@ -34,8 +34,8 @@ export default async function RootLayout({
 
   const messages = await getMessages();
   return (
-    <html lang={locale}>
-      <body className={poppins.className} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
+      <body className={poppins.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

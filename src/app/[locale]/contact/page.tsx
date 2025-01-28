@@ -144,16 +144,12 @@ export default function ContactPage() {
               </Alert>
             )}
           </div>
-          <div className=" space-x-2 flex">
-            <Checkbox
-              id="agreement"
-              className="mt-1"
-              {...register("agreement")}
-            />
+          <div className=" space-x-2 flex items-center">
+            <Checkbox id="agreement" className="" {...register("agreement")} />
 
             <Label
               htmlFor="agreement"
-              className="text-sm font-normal text-muted-foreground"
+              className="text-sm font-normal text-foreground"
             >
               En soumettant ce formulaire, j’accepte que les informations
               saisies soient utilisées pour permettre de me recontacter,

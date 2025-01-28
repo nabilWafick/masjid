@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
@@ -12,23 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { FC, useEffect } from "react";
+import { FC } from "react";
 
 interface ThemeToggleProps {
   align?: "center" | "start" | "end";
 }
 
 const ThemeToggle: FC<ThemeToggleProps> = ({ align }) => {
-  const { theme, setTheme } = useTheme();
-
-  useEffect(() => {
-    const className = "dark";
-    const bodyClass = window.document.body.classList;
-
-    theme === "dark" ? bodyClass.add(className) : bodyClass.remove(className);
-
-    console.log(" ======> body class with dark", bodyClass.contains("dark"));
-  }, [theme]);
+  const { setTheme } = useTheme();
 
   return (
     <DropdownMenu>

@@ -23,7 +23,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 // Custom hook for form handling
-export const useDonationForm = () => {
+const useContactForm = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -64,7 +64,7 @@ export const useDonationForm = () => {
 };
 
 export default function ContactPage() {
-  const { onSubmit, errors, isSubmitting, register } = useDonationForm();
+  const { onSubmit, errors, isSubmitting, register } = useContactForm();
   return (
     <div className="min-h-screen bg-background">
       <PageHeader

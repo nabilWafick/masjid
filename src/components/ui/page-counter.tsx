@@ -1,6 +1,6 @@
-import React, { FC, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import React, { useState } from "react";
 
 const PageCounter = React.forwardRef<
   HTMLDivElement,
@@ -142,5 +142,7 @@ const PageCounter = React.forwardRef<
     </div>
   );
 });
+
+PageCounter.displayName = "PageCounter";
 
 export default PageCounter;

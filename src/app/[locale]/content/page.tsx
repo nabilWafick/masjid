@@ -90,7 +90,7 @@ La Prière Tarawih - Après l'iftar, de nombreux musulmans se rendent à la mosq
           </p>
           <span className=" w-full  flex justify-end items-end pt-5 pr-3 ">
             <div className=" flex justify-between items-center space-x-3">
-              <p className="text-xs">Partagez l'article :</p>
+              <p className="text-xs">Partagez l&apos;article :</p>
               <FaFacebook
                 size={23}
                 className=" text-primary hover:cursor-pointer"

@@ -39,7 +39,7 @@ const Navbar = () => {
   const local = params.locale;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState("fr");
+  const [currentLang] = useState("fr");
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -55,8 +55,9 @@ const Navbar = () => {
     <Link
       href={href}
       className=" hover:text-primary text-sm hover:font-semibold px-2 py-3"
-      children={children}
-    />
+    >
+      {children}
+    </Link>
   );
 
   return (

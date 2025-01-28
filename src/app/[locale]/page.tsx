@@ -59,8 +59,8 @@ const HomePage = () => {
               <Card className="p-6 space-y-4">
                 <h3 className="text-lg font-medium">Aumône</h3>
                 <p className="text-muted-foreground text-sm">
-                  Faites un don pour contribuer aux dépenses et l'entretien de
-                  la mosquée.
+                  Faites un don pour contribuer aux dépenses et l&apos;entretien
+                  de la mosquée.
                 </p>
               </Card>
             </Link>
@@ -85,9 +85,9 @@ const HomePage = () => {
               <h2 className="text-xl font-bold mb-4">Notre Mosquée</h2>
               <p className="text-muted-foreground mb-6 text-sm">
                 La Mosquée du Dare SALAM est un lieu de culte et de
-                rassemblement pour la communauté musulmane d'Abomey-Calavi. Nous
-                offrons un espace accueillant pour la prière, l'apprentissage et
-                le partage.
+                rassemblement pour la communauté musulmane d&apos;Abomey-Calavi.
+                Nous offrons un espace accueillant pour la prière,
+                l&apos;apprentissage et le partage.
               </p>
               <Button variant="link" className="p-0">
                 <Link href={"/mosque"}>En savoir plus</Link>

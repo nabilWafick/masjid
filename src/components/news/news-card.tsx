@@ -15,7 +15,7 @@ export function NewsCard({ title, date, image, excerpt }: NewsCardProps) {
   return (
     <Card className="overflow-hidden shadow-md">
       <div className="relative h-52 w-full">
-        <img src={image} alt={title} className="object-cover w-full h-full" />
+        <Image src={image} alt={title} className="object-cover w-full h-full" />
       </div>
       <CardHeader className="py-4 space-y-3 flex justify-end">
         <div className="text-sm text-primary font-medium text-end">

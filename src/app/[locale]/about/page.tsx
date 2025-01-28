@@ -2,9 +2,7 @@ import AboutSection from "@/components/ui/about-section";
 import { PageHeader } from "@/components/ui/page-header";
 import { FC } from "react";
 
-interface AboutPageProps {}
-
-const AboutPage: FC<AboutPageProps> = () => {
+const AboutPage: FC = () => {
   return (
     <>
       <PageHeader title="A propos" description="Tout savoir sur la mosquée" />

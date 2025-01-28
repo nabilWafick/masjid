@@ -1,13 +1,13 @@
-import "./global.css";
-import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
-import Navbar from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import Navbar from "@/components/navbar";
+import { ThemeProvider } from "@/components/theme-provider";
+import { routing } from "@/i18n/routing";
+import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { Poppins } from "next/font/google";
 import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
+import "./global.css";
 
 const poppins = Poppins({
   subsets: ["latin"],

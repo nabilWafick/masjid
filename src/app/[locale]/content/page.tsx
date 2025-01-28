@@ -1,29 +1,10 @@
-import { NewsCardProps } from "@/components/news/news-card";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatDate } from "@/lib/utils";
-import { File, Link } from "lucide-react";
+import { File } from "lucide-react";
+import Image from "next/image";
 import { FC } from "react";
-import {
-  FaEnvelope,
-  FaFacebook,
-  FaLink,
-  FaMailBulk,
-  FaMailchimp,
-  FaPaperclip,
-  FaPaperPlane,
-  FaWhatsapp,
-} from "react-icons/fa";
+import { FaEnvelope, FaFacebook, FaLink } from "react-icons/fa";
 
-interface ContentPageProps {
-  // news: NewsCardProps;
-}
-
-const ContentPage: FC<ContentPageProps> = (
-  {
-    //news
-  }
-) => {
+const ContentPage: FC = () => {
   const news = {
     id: 1,
     title: "Ramadan 1446H",
@@ -91,7 +72,7 @@ La Prière Tarawih - Après l'iftar, de nombreux musulmans se rendent à la mosq
     <div className="container py-12 mt-20">
       <Card className="overflow-hidden shadow-md">
         <div className="relative h-72 w-full">
-          <img
+          <Image
             src={news.image}
             alt={news.title}
             className="object-cover w-full h-full"

@@ -2,8 +2,6 @@ import React, { FC, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface PageCounterProps {}
-
 const PageCounter = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>

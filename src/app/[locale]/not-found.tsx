@@ -2,9 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { FC } from "react";
 
-interface NotFoundProps {}
-
-const NotFound: FC<NotFoundProps> = () => {
+const NotFound: FC = () => {
   return (
     <div className="h-screen w-screen justify-center items-center bg-background text-foreground">
       <div>

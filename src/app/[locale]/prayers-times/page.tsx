@@ -1,12 +1,12 @@
 "use client";
 
 // Component
-import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import axios from "axios";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/page-header";
+import axios from "axios";
 import { Loader2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
 
 // types.ts
 interface Location {
@@ -112,7 +112,11 @@ const PrayerTimesPage: React.FC = () => {
                 longitude: position.coords.longitude,
               });
             } catch (err) {
-              setError("Unable to get location details");
+              setError(
+                `Unable to get location details: ${
+                  err instanceof Error ? err.message : "An error occurred"
+                }`
+              );
               setLoading(false);
             }
           },

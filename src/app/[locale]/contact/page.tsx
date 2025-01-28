@@ -64,8 +64,7 @@ export const useDonationForm = () => {
 };
 
 export default function ContactPage() {
-  const { onSubmit, errors, isSubmitting, register, setValue, watch } =
-    useDonationForm();
+  const { onSubmit, errors, isSubmitting, register } = useDonationForm();
   return (
     <div className="min-h-screen bg-background">
       <PageHeader

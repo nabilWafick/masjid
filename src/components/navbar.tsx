@@ -1,12 +1,11 @@
 "use client";
 
+import { Menu, X } from "lucide-react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
-import { Menu, X, Globe, Inspect, Moon } from "lucide-react";
 import LanguageToggle from "./language-toggle";
 import ThemeToggle from "./theme-toggle";
-import Link from "next/link";
-import { cn } from "../lib/utils";
-import { useParams } from "next/navigation";
 
 const locales = {
   en: {
@@ -44,11 +43,6 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  const changeLanguage = (lang: string) => {
-    setCurrentLang(lang);
-    // You can add your own language change handler here
-  };
-
   const t = locales[currentLang as keyof typeof locales];
 
   const NavLink = ({
@@ -73,7 +67,7 @@ const Navbar = () => {
           <div className="flex-shrink-0">
             <NavLink href="/">
               <div className="flex items-center">
-                {/* <img
+                {/* <Image
                   className="h-12 w-auto"
                   src="/api/placeholder/48/48"
                   alt="Mosque Logo"

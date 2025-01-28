@@ -104,7 +104,7 @@ export function Footer() {
               </p>
               <Input placeholder="Votre mail" />
             </div>
-            <Button>Je m'abonne</Button>
+            <Button>Je m&apos;abonne</Button>
           </div>
         </div>
         <div className="mt-8 border-t pt-8 text-center text-xs text-muted-foreground">

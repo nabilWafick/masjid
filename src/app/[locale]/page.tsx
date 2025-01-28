@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
@@ -93,7 +94,7 @@ const HomePage = () => {
               </Button>
             </div>
             <div className="relative h-[400px]">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1519915212116-7cfef71f1d3e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG1vc3F1ZXxlbnwwfHwwfHx8MA%3D%3D"
                 alt="Intérieur de la mosquée"
                 className="rounded-lg object-cover w-full h-full"

@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock } from "lucide-react";
 import { cn } from "../../lib/utils";
+import Image from "next/image";
 
 interface ActivitiesCardProps {
   title: string;
@@ -20,7 +21,7 @@ export function ActivitiesCard({
   return (
     <Card className="overflow-hidden shadow-md">
       <div className="relative h-52 w-full">
-        <img src={image} alt={title} className="object-cover w-full h-full" />
+        <Image src={image} alt={title} className="object-cover w-full h-full" />
       </div>
       <CardHeader className="py-4 space-y-3 flex justify-end">
         <span className="text-lg text-foreground line-clamp-2">{day}</span>

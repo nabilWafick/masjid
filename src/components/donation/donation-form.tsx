@@ -77,7 +77,7 @@ export function DonationForm() {
           <div className="space-y-4">
             <Label>Montant du don</Label>
             <div className="grid grid-cols-3 gap-4">
-              {["50", "100", "200"].map((amount) => (
+              {["500", "1000", "2000", "5000"].map((amount) => (
                 <Button
                   key={amount}
                   type="button"
@@ -87,7 +87,7 @@ export function DonationForm() {
                   }
                   onClick={() => setValue("amount", amount)}
                 >
-                  {amount}€
+                  {amount}f
                 </Button>
               ))}
             </div>

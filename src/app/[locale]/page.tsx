@@ -3,8 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
-export default function Home() {
+const HomePage = () => {
+  const params = useParams<{ locale: string }>();
+  const local = params.locale;
   // const { t } = useTranslation();
 
   return (
@@ -33,7 +36,7 @@ export default function Home() {
       <section className="py-16 bg-background">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            <Link href={""}>
+            <Link href={`/${local}/payers-times`}>
               <Card className="p-6 space-y-4">
                 <h3 className="text-lg font-medium">Horaires des prières</h3>
                 <p className="text-muted-foreground text-sm">
@@ -43,32 +46,29 @@ export default function Home() {
               </Card>
             </Link>
 
-            <Link href={""}>
+            <Link href={`/${local}/activities`}>
               <Card className="p-6 space-y-4">
-                <h3 className="text-lg font-medium">Événements</h3>
+                <h3 className="text-lg font-medium">Activités</h3>
                 <p className="text-muted-foreground text-sm">
                   Découvrez nos activités et événements à venir.
                 </p>
               </Card>
             </Link>
-
-            <Link href={""}>
-              {" "}
-              <Card className="p-6 space-y-4">
-                <h3 className="text-lg font-medium">Communauté</h3>
-                <p className="text-muted-foreground text-sm">
-                  Rejoignez notre communauté dynamique et participez à nos
-                  activités.
-                </p>
-              </Card>
-            </Link>
-
-            <Link href={""}>
+            <Link href={`/${local}/invest`}>
               <Card className="p-6 space-y-4">
                 <h3 className="text-lg font-medium">Aumône</h3>
                 <p className="text-muted-foreground text-sm">
                   Faites un don pour contribuer aux dépenses et l'entretien de
                   la mosquée.
+                </p>
+              </Card>
+            </Link>
+            <Link href={`/${local}/contact`}>
+              <Card className="p-6 space-y-4">
+                <h3 className="text-lg font-medium">Communauté</h3>
+                <p className="text-muted-foreground text-sm">
+                  Rejoignez notre communauté dynamique et participez à nos
+                  activités.
                 </p>
               </Card>
             </Link>
@@ -104,4 +104,6 @@ export default function Home() {
       </section>
     </div>
   );
-}
+};
+
+export default HomePage;

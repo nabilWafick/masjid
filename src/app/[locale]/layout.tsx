@@ -2,7 +2,7 @@ import "./global.css";
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
-import Navbar from "@/components/navbar_v2";
+import Navbar from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -36,18 +36,18 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className={poppins.className} suppressHydrationWarning>
-        <NextIntlClientProvider messages={messages}>
-          {/* <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          > */}
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-          {/* </ThemeProvider> */}
-        </NextIntlClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider messages={messages}>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

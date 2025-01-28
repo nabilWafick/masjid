@@ -11,8 +11,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { FC } from "react";
 
-export function LanguageToggle() {
+interface LanguageToggleProps {
+  align?: "center" | "start" | "end";
+}
+
+const LanguageToggle: FC<LanguageToggleProps> = ({ align }) => {
   const router = useRouter();
 
   return (
@@ -23,7 +28,7 @@ export function LanguageToggle() {
           <span className="sr-only">Change language</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="center">
+      <DropdownMenuContent align={align ?? "center"}>
         <DropdownMenuItem onClick={() => router.push("/ar")}>
           العربية
         </DropdownMenuItem>
@@ -37,4 +42,6 @@ export function LanguageToggle() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
+
+export default LanguageToggle;

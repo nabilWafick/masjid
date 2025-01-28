@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
 
-interface NewsCardProps {
+export interface NewsCardProps {
   title: string;
   date: string;
   image: string;

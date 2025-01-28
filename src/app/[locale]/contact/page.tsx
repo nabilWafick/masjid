@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
@@ -14,6 +16,7 @@ const formSchema = z.object({
   email: z.string().email("Invalid email address"),
   object: z.string().min(2, "Object must be at least 3 characters"),
   message: z.string().min(5, "Message must be at least 5 characters"),
+  agreement: z.boolean(),
 });
 
 // Create a type from the schema
@@ -29,6 +32,7 @@ export const useDonationForm = () => {
       email: "",
       object: "",
       message: "",
+      agreement: false,
     },
   });
 
@@ -140,6 +144,26 @@ export default function ContactPage() {
               </Alert>
             )}
           </div>
+          <div className=" space-x-2 flex">
+            <Checkbox
+              id="agreement"
+              className="mt-1"
+              {...register("agreement")}
+            />
+
+            <Label
+              htmlFor="agreement"
+              className="text-sm font-normal text-muted-foreground"
+            >
+              En soumettant ce formulaire, j’accepte que les informations
+              saisies soient utilisées pour permettre de me recontacter,
+              répondre à ma demande.
+            </Label>
+          </div>
+
+          <Button type="submit" onSubmit={onSubmit} className=" px-20">
+            {isSubmitting ? "En cours d'envoi" : "Envoyez"}
+          </Button>
         </div>
       </div>
     </div>

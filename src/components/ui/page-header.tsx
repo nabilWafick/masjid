@@ -5,13 +5,11 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, description }: PageHeaderProps) {
   return (
-    <div className="bg-muted mt-16">
-      <div className="container py-20">
-        <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
-        {description && (
-          <p className="mt-4 text-lg text-muted-foreground">{description}</p>
-        )}
-      </div>
+    <div className=" container bg-muted mt-16 py-20">
+      <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
+      {description && (
+        <p className="mt-4 text-lg text-muted-foreground">{description}</p>
+      )}
     </div>
   );
 }

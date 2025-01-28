@@ -56,13 +56,13 @@ const Navbar = () => {
   }) => (
     <Link
       href={href}
-      className=" hover:text-primary font-light hover:font-semibold transition-colors duration-200"
+      className=" hover:text-primary text-sm hover:font-semibold transition-colors duration-200"
       children={children}
     />
   );
 
   return (
-    <nav className="fixed top-0 z-[999] w-full  bg-background backdrop-blur-md  border-b sm:px-12 ">
+    <nav className="fixed top-0 z-[999] w-full  bg-background backdrop-blur-md  border-b container ">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -82,7 +82,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8">
             <NavLink href="/mosque">{t.mosque}</NavLink>
             <NavLink href="/actualites">{t.news}</NavLink>
             <NavLink href="/activities">{t.activities}</NavLink>
@@ -126,7 +126,7 @@ const Navbar = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
               onClick={toggleMenu}
               className="inline-flex items-center justify-center p-2 rounded-md text-purple-800"

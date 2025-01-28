@@ -1,35 +1,36 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { formatDate } from "@/lib/utils"
-import Image from "next/image"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatDate } from "@/lib/utils";
+import Image from "next/image";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 interface NewsCardProps {
-  title: string
-  date: string
-  image: string
-  excerpt: string
+  title: string;
+  date: string;
+  image: string;
+  excerpt: string;
 }
 
 export function NewsCard({ title, date, image, excerpt }: NewsCardProps) {
   return (
-    <Card className="overflow-hidden">
-      <div className="relative h-48 w-full">
-        <img
-          src={image}
-          alt={title}
-          className="object-cover w-full h-full"
-        />
+    <Card className="overflow-hidden shadow-md">
+      <div className="relative h-52 w-full">
+        <img src={image} alt={title} className="object-cover w-full h-full" />
       </div>
-      <CardHeader>
-        <div className="text-sm text-muted-foreground">
+      <CardHeader className="py-4 space-y-3 flex justify-end">
+        <div className="text-sm text-primary font-medium text-end">
           {formatDate(date)}
         </div>
-        <CardTitle className="line-clamp-2">{title}</CardTitle>
+        <CardTitle className="">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-muted-foreground line-clamp-3">
-          {excerpt}
-        </p>
+        <p className="text-muted-foreground line-clamp-3 text-sm">{excerpt}</p>
+        <span className=" border-t border-muted-foreground mt-7 pt-2  w-full  flex justify-end items-end ">
+          <Button variant={"link"} className="p-0">
+            <Link href={"/article-content"}>Continuez la lecture</Link>
+          </Button>
+        </span>
       </CardContent>
     </Card>
-  )
+  );
 }

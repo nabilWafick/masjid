@@ -21,10 +21,10 @@ export default function InvestirPage() {
               donorsCount={324}
             />
 
-            <div className="prose dark:prose-invert">
-              <h3>Pourquoi investir ?</h3>
-              <p>Votre contribution permet de :</p>
-              <ul>
+            <div className="container lg:pl-7">
+              <h3 className=" font-semibold mb-2">Pourquoi investir ?</h3>
+              <p className="font-medium mb-1">Votre contribution permet de :</p>
+              <ul className="text-sm list-disc list-inside">
                 <li>Maintenir et améliorer les installations</li>
                 <li>Soutenir les activités éducatives</li>
                 <li>Développer de nouveaux projets communautaires</li>

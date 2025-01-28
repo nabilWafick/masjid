@@ -3,6 +3,7 @@
 //import { useTranslation } from "react-i18next"
 import { NewsCard } from "@/components/news/news-card";
 import { PageHeader } from "@/components/ui/page-header";
+import PageCounter from "../../../components/ui/page-counter";
 
 export default function NewsPage() {
   // const { t } = useTranslation()
@@ -13,18 +14,18 @@ export default function NewsPage() {
       title: "Ramadan 2024",
       date: "2024-03-10",
       image:
-        "https://images.unsplash.com/photo-1564683214965-3619addd900d?q=80&w=800&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1614061811858-dde54a522f5e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFtYWRhbiUyMGZvb2R8ZW58MHx8MHx8fDA%3D",
       excerpt:
-        "Préparation pour le mois sacré du Ramadan 2024. Programme des prières et des activités.",
+        "Préparation pour le mois sacré du Ramadan 2024. Programme des prières et des activités ...",
     },
     {
       id: 2,
-      title: "Cours d'arabe",
-      date: "2024-03-05",
+      title: "Hajj",
+      date: "2025-03-05",
       image:
-        "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?q=80&w=800&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1511652019870-fbd8713560bf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDN8fGhhamp8ZW58MHx8MHx8fDI%3D",
       excerpt:
-        "Nouveaux horaires pour les cours d'arabe. Inscriptions ouvertes pour tous les niveaux.",
+        "Les conseils et recommendation pour bien effectuer le Hajj de l'année 1447H ...",
     },
   ];
 
@@ -42,6 +43,8 @@ export default function NewsPage() {
           ))}
         </div>
       </div>
+
+      <PageCounter className="" />
     </div>
   );
 }

@@ -35,8 +35,8 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
             <Link href={""}>
               <Card className="p-6 space-y-4">
-                <h3 className="text-xl font-semibold">Horaires des prières</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-lg font-medium">Horaires des prières</h3>
+                <p className="text-muted-foreground text-sm">
                   Consultez les horaires des prières quotidiennes et du
                   vendredi.
                 </p>
@@ -45,8 +45,8 @@ export default function Home() {
 
             <Link href={""}>
               <Card className="p-6 space-y-4">
-                <h3 className="text-xl font-semibold">Événements</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-lg font-medium">Événements</h3>
+                <p className="text-muted-foreground text-sm">
                   Découvrez nos activités et événements à venir.
                 </p>
               </Card>
@@ -55,8 +55,8 @@ export default function Home() {
             <Link href={""}>
               {" "}
               <Card className="p-6 space-y-4">
-                <h3 className="text-xl font-semibold">Communauté</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-lg font-medium">Communauté</h3>
+                <p className="text-muted-foreground text-sm">
                   Rejoignez notre communauté dynamique et participez à nos
                   activités.
                 </p>
@@ -65,8 +65,8 @@ export default function Home() {
 
             <Link href={""}>
               <Card className="p-6 space-y-4">
-                <h3 className="text-xl font-semibold">Aumône</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-lg font-medium">Aumône</h3>
+                <p className="text-muted-foreground text-sm">
                   Faites un don pour contribuer aux dépenses et l'entretien de
                   la mosquée.
                 </p>
@@ -81,14 +81,14 @@ export default function Home() {
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-4">Notre Mosquée</h2>
-              <p className="text-muted-foreground mb-6">
+              <h2 className="text-xl font-bold mb-4">Notre Mosquée</h2>
+              <p className="text-muted-foreground mb-6 text-sm">
                 La Mosquée du Dare SALAM est un lieu de culte et de
                 rassemblement pour la communauté musulmane d'Abomey-Calavi. Nous
                 offrons un espace accueillant pour la prière, l'apprentissage et
                 le partage.
               </p>
-              <Button variant="link">
+              <Button variant="link" className="p-0">
                 <Link href={"/mosque"}>En savoir plus</Link>
               </Button>
             </div>

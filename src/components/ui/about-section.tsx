@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { FC } from "react";
 
 interface AboutSectionProps {
@@ -21,7 +20,7 @@ const AboutSection: FC<AboutSectionProps> = ({
       {isEver ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center'">
           <div className="h-[400px] relative">
-            <Image
+            <img
               src={image}
               alt={title}
               className=" object-cover h-full w-full"
@@ -34,7 +33,7 @@ const AboutSection: FC<AboutSectionProps> = ({
         <div className=" grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <p className=" text-wrap text-start p-5">{description}</p>
           <div className="h-[400px] relative">
-            <Image
+            <img
               src={image}
               alt={title}
               className="h-full w-full object-cover"

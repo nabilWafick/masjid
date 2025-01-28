@@ -68,7 +68,7 @@ const Navbar = () => {
           <div className="flex-shrink-0">
             <NavLink href="/">
               <div className="flex items-center">
-                {/* <Image
+                {/* <img
                   className="h-12 w-auto"
                   src="/api/placeholder/48/48"
                   alt="Mosque Logo"

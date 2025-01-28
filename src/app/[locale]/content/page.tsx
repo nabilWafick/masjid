@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { File } from "lucide-react";
-import Image from "next/image";
 import { FC } from "react";
 import { FaEnvelope, FaFacebook, FaLink } from "react-icons/fa";
 
@@ -72,7 +71,7 @@ La Prière Tarawih - Après l'iftar, de nombreux musulmans se rendent à la mosq
     <div className="container py-12 mt-20">
       <Card className="overflow-hidden shadow-md">
         <div className="relative h-72 w-full">
-          <Image
+          <img
             src={news.image}
             alt={news.title}
             className="object-cover w-full h-full"

@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDate } from "@/lib/utils";
-import Image from "next/image";
-import { Button } from "../ui/button";
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 export interface NewsCardProps {
   title: string;
@@ -13,9 +12,9 @@ export interface NewsCardProps {
 
 export function NewsCard({ title, date, image, excerpt }: NewsCardProps) {
   return (
-    <Card className="overflow-hidden shadow-md">
+    <Card className="overflow-hidden shadow-md dark:shadow-white/10">
       <div className="relative h-52 w-full">
-        <Image src={image} alt={title} className="object-cover w-full h-full" />
+        <img src={image} alt={title} className="object-cover w-full h-full" />
       </div>
       <CardHeader className="py-4 space-y-3 flex justify-end">
         <div className="text-sm text-primary font-medium text-end">

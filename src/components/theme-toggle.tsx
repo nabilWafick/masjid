@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 interface ThemeToggleProps {
   align?: "center" | "start" | "end";
@@ -21,23 +21,27 @@ interface ThemeToggleProps {
 const ThemeToggle: FC<ThemeToggleProps> = ({ align }) => {
   const { theme, setTheme } = useTheme();
 
+  useEffect(() => {
+    const className = "dark";
+    const bodyClass = window.document.body.classList;
+
+    theme === "dark" ? bodyClass.add(className) : bodyClass.remove(className);
+
+    console.log(" ======> body class with dark", bodyClass.contains("dark"));
+  }, [theme]);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button size="icon">
           <Sun
-            className={`h-[1.2rem] w-[1.2rem]  transition-all duration-700 ${
-              theme === "dark"
-                ? "dark:-rotate-90 dark:scale-0"
-                : "rotate-0 scale-100"
-            } `}
+            className={`h-[1.2rem] w-[1.2rem]  transition-all duration-700 dark:-rotate-90 dark:scale-0 rotate-0 scale-100
+            `}
           />
           <Moon
-            className={`absolute h-[1.2rem] w-[1.2rem] transition-all duration-700 ${
-              theme === "dark"
-                ? "dark:rotate-0 dark:scale-100"
-                : "rotate-90 scale-0"
-            }  `}
+            className={`absolute h-[1.2rem] w-[1.2rem] transition-all duration-700 dark:rotate-0 dark:scale-100
+                rotate-90 scale-0
+           `}
           />
           <span className="sr-only">Toggle theme</span>
         </Button>

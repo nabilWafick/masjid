@@ -33,7 +33,7 @@ export function Footer() {
             <ul className="space-y-2 text-xs text-muted-foreground">
               <li>
                 <Link
-                  href={`/${local}/payers-times`}
+                  href={`/${local}/prayers-times`}
                   className="hover:text-foreground"
                 >
                   Horaires des prières

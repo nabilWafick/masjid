@@ -60,7 +60,7 @@ const Navbar = () => {
   }) => (
     <Link
       href={href}
-      className=" hover:text-primary text-sm hover:font-semibold transition-colors duration-200"
+      className=" hover:text-primary text-sm hover:font-semibold px-2 py-3"
       children={children}
     />
   );
@@ -91,7 +91,7 @@ const Navbar = () => {
             <NavLink href={`/${local}/news`}>{t.news}</NavLink>
             <NavLink href={`/${local}/activities`}>{t.activities}</NavLink>
             <NavLink href={`/${local}/invest`}>Investir</NavLink>
-            <NavLink href={`/${local}/payers-times`}>{t.prayerTimes}</NavLink>
+            <NavLink href={`/${local}/prayers-times`}>{t.prayerTimes}</NavLink>
             <NavLink href={`/${local}/contact`}>{t.contact}</NavLink>
 
             <div className="flex items-center space-x-5">
@@ -129,7 +129,7 @@ const Navbar = () => {
             <NavLink href={`/${local}/activities`}>
               <div className="block px-3 py-2 rounded-md">{t.activities}</div>
             </NavLink>
-            <NavLink href={`/${local}/payers-times`}>
+            <NavLink href={`/${local}/prayers-times`}>
               <div className="block px-3 py-2 rounded-md">{t.prayerTimes}</div>
             </NavLink>
             <NavLink href={`/${local}/contact`}>

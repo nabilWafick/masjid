@@ -5,7 +5,7 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, description }: PageHeaderProps) {
   return (
-    <div className=" container bg-muted mt-[65px] py-20">
+    <div className=" container bg-primary/20 mt-[65px] py-20 px-7  ">
       <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
       {description && (
         <p className="mt-4 text-lg text-muted-foreground">{description}</p>

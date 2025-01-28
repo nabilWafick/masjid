@@ -33,10 +33,10 @@ const HomePage = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-background">
+      <section className="py-16 bg-muted">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            <Link href={`/${local}/payers-times`}>
+            <Link href={`/${local}/prayers-times`}>
               <Card className="p-6 space-y-4">
                 <h3 className="text-lg font-medium">Horaires des prières</h3>
                 <p className="text-muted-foreground text-sm">
@@ -77,7 +77,7 @@ const HomePage = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-16 bg-muted">
+      <section className="py-16 bg-background">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>

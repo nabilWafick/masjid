@@ -19,9 +19,6 @@ const ProjectContentPage: FC = () => {
       "Finaliser la construction de la mosquée afin d'offrir plus d'espace et de comfort aux fidéles.",
   };
 
-  const params = useParams<{ locale: string }>();
-  const local = params.locale;
-
   return (
     <div className="container py-12 mt-20">
       <Card className="overflow-hidden shadow-md">

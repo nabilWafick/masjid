@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatDate } from "@/lib/utils";
 import Link from "next/link";
-import { Button } from "../ui/button";
 import { useParams } from "next/navigation";
+import { Button } from "../ui/button";
 
 export interface ProjectCardProps {
   title: string;
@@ -13,7 +12,7 @@ export interface ProjectCardProps {
 
 export function ProjectCard({
   title,
-  date,
+
   image,
   description,
 }: ProjectCardProps) {

@@ -82,8 +82,8 @@ const PrayerTimesPage: React.FC = () => {
   const [location, setLocation] = useState<Location>(masjidLocation);
   const [cityName, setCityName] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<
-    "Masjid Dare Salam" | "User Town"
-  >("Masjid Dare Salam");
+    "Masjid Darou Salam" | "User Town"
+  >("Masjid Darou Salam");
 
   useEffect(() => {
     const getLocation = (): void => {
@@ -243,16 +243,16 @@ const PrayerTimesPage: React.FC = () => {
           <CardHeader className="flex flex-row justify-evenly items-center content-center w-full space-y-0">
             <CardTitle
               className={` border ${
-                selectedCity === "Masjid Dare Salam"
+                selectedCity === "Masjid Darou Salam"
                   ? "bg-primary/20 text-primary border-primary"
                   : ""
               } border-border max-w-fit p-2 mt-0  hover:cursor-pointer`}
               onClick={() => {
-                setSelectedCity("Masjid Dare Salam");
+                setSelectedCity("Masjid Darou Salam");
                 setLocation(masjidLocation);
               }}
             >
-              Mosquée Dare SALAM
+              Mosquée Darou SALAM
             </CardTitle>
             <CardTitle
               className={` border ${

@@ -75,12 +75,12 @@ export default function ContactPage() {
       <div className="container py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-7">
           <span className="text-lg text-muted-foreground font-semibold">
-            Mosquée Dare SALAM
+            Mosquée Darou SALAM
           </span>
 
           <div className="text-sm text-muted-foreground space-y-2">
             <p>Qt Cité La Victoire</p>
-            <p>masjid.daresalam@gmail.com</p>
+            <p>masjid.Darousalam@gmail.com</p>
             <p>00229 0190524895</p>
           </div>
         </div>

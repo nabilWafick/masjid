@@ -15,8 +15,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Mosquée Dare SALAM",
-  description: "Site officiel de la Mosquée Dare SALAM à Abomey-Calavi",
+  title: "Mosquée Darou SALAM",
+  description: "Site officiel de la Mosquée Darou SALAM à Abomey-Calavi",
 };
 
 export default async function RootLayout({

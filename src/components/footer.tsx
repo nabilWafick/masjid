@@ -89,7 +89,7 @@ export function Footer() {
           </div>
           <div className="space-y-4">
             <span className="font-semibold text-primary ">
-              Mosquée Dare SALAM
+              Mosquée Darou SALAM
             </span>
             <p className="text-xs text-muted-foreground">
               Un lieu de paix, de prière et de communauté au cœur de la société
@@ -109,7 +109,7 @@ export function Footer() {
         </div>
         <div className="mt-8 border-t pt-8 text-center text-xs text-muted-foreground">
           <p>
-            © {new Date().getFullYear()} Mosquée Dare SALAM. Tous droits
+            © {new Date().getFullYear()} Mosquée Darou SALAM. Tous droits
             réservés.
           </p>
         </div>

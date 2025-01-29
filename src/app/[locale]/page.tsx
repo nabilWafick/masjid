@@ -28,7 +28,7 @@ const HomePage = () => {
           <h1 className="text-4xl md:text-6xl font-bold">
             Assalamou Anleykoum
           </h1>
-          <p className="text-xl md:text-2xl">Masjid Dare SALAM</p>
+          <p className="text-xl md:text-2xl">Masjid Darou SALAM</p>
         </div>
       </section>
 
@@ -83,7 +83,7 @@ const HomePage = () => {
             <div>
               <h2 className="text-xl font-bold mb-4">Notre Mosquée</h2>
               <p className="text-muted-foreground mb-6 text-sm">
-                La Mosquée du Dare SALAM est un lieu de culte et de
+                La Mosquée du Darou SALAM est un lieu de culte et de
                 rassemblement pour la communauté musulmane d&apos;Abomey-Calavi.
                 Nous offrons un espace accueillant pour la prière,
                 l&apos;apprentissage et le partage.

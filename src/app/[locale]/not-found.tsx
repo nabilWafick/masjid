@@ -9,7 +9,7 @@ const NotFound: FC = () => {
         <p className="text-2xl">Oups!</p>
         <p className="text-lg my-10">Page non trouve</p>
         <Button variant={"link"}>
-          <Link href={"/"}>Mosquée Dare SALAM</Link>
+          <Link href={"/"}>Mosquée Darou SALAM</Link>
         </Button>
       </div>
     </div>

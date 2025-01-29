@@ -73,7 +73,7 @@ const Navbar = () => {
                   src="/api/placeholder/48/48"
                   alt="Mosque Logo"
                 /> */}
-                <h1 className="mr-3 font-semibold">Mosquée Dare SALAM</h1>
+                <h1 className="mr-3 font-semibold">Mosquée Darou SALAM</h1>
 
                 {/* <Moon className="fill-primary" /> */}
               </div>

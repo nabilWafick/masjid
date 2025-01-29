@@ -91,7 +91,6 @@ const HomePage = () => {
               <Button variant="link" className="p-0">
                 <Link href={"/mosque"}>En savoir plus</Link>
               </Button>
-              s
             </div>
             <div className="relative h-[400px]">
               <img

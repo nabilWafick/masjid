@@ -86,6 +86,7 @@ const Navbar = () => {
             <NavLink href={`/${local}/news`}>{t.news}</NavLink>
             <NavLink href={`/${local}/activities`}>{t.activities}</NavLink>
             <NavLink href={`/${local}/invest`}>Investir</NavLink>
+            <NavLink href={`/${local}/projects`}>Nos projets</NavLink>
             <NavLink href={`/${local}/prayers-times`}>{t.prayerTimes}</NavLink>
             <NavLink href={`/${local}/contact`}>{t.contact}</NavLink>
 
@@ -126,6 +127,9 @@ const Navbar = () => {
             </NavLink>
             <NavLink href={`/${local}/prayers-times`}>
               <div className="block px-3 py-2 rounded-md">{t.prayerTimes}</div>
+            </NavLink>
+            <NavLink href={`/${local}/projects`}>
+              <div className="block px-3 py-2 rounded-md">Nos projets</div>
             </NavLink>
             <NavLink href={`/${local}/contact`}>
               <div className="block px-3 py-2 rounded-md">{t.contact}</div>

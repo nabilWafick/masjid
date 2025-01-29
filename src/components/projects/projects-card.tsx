@@ -1,19 +1,22 @@
-"use client";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { useParams } from "next/navigation";
 
-export interface NewsCardProps {
+export interface ProjectCardProps {
   title: string;
   date: string;
   image: string;
   description: string;
 }
 
-export function NewsCard({ title, date, image, description }: NewsCardProps) {
+export function ProjectCard({
+  title,
+  date,
+  image,
+  description,
+}: ProjectCardProps) {
   const params = useParams<{ locale: string }>();
   const local = params.locale;
   return (
@@ -22,18 +25,21 @@ export function NewsCard({ title, date, image, description }: NewsCardProps) {
         <img src={image} alt={title} className="object-cover w-full h-full" />
       </div>
       <CardHeader className="py-4 space-y-3 flex justify-end">
-        <div className="text-sm text-primary font-medium text-end">
+        {/* <div className="text-sm text-primary font-medium text-end">
           {formatDate(date)}
-        </div>
+        </div> */}
         <CardTitle className="">{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <p className="text-muted-foreground line-clamp-3 text-sm">
           {description}
         </p>
-        <div className=" border-t border-muted-foreground mt-7 pt-2  w-full  flex justify-end items-end ">
+        <div className=" border-t border-muted-foreground mt-7 pt-3  w-full  flex justify-between items-end ">
+          <Button>
+            <Link href={`/${local}/invest`}>Faire un don</Link>
+          </Button>
           <Button variant={"link"} className="p-0">
-            <Link href={`/${local}/news/1`}>Continuez la lecture</Link>
+            <Link href={`/${local}/projects/1`}>Continuez la lecture</Link>
           </Button>
         </div>
       </CardContent>

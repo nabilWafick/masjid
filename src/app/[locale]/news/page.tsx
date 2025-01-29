@@ -15,7 +15,7 @@ export default function NewsPage() {
       date: "2024-03-10",
       image:
         "https://images.unsplash.com/photo-1614061811858-dde54a522f5e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFtYWRhbiUyMGZvb2R8ZW58MHx8MHx8fDA%3D",
-      excerpt:
+      description:
         "Préparation pour le mois sacré du Ramadan 2024. Programme des prières et des activités ...",
     },
     {
@@ -24,7 +24,7 @@ export default function NewsPage() {
       date: "2025-03-05",
       image:
         "https://images.unsplash.com/photo-1511652019870-fbd8713560bf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDN8fGhhamp8ZW58MHx8MHx8fDI%3D",
-      excerpt:
+      description:
         "Les conseils et recommendation pour bien effectuer le Hajj de l'année 1447H ...",
     },
   ];

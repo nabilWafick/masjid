@@ -62,7 +62,7 @@ export function Footer() {
             <h3 className="font-medium mb-4">Suivez-nous</h3>
             <div className="flex flex-col space-y-2 text-muted-foreground">
               <Link
-                href={`www.facebook.com`}
+                href={`https://www.facebook.com`}
                 target="_blank"
                 className="flex space-x-3"
               >
@@ -70,7 +70,7 @@ export function Footer() {
                 <p className="text-xs text">Facebook</p>
               </Link>
               <Link
-                href={`www.whatsapp.com`}
+                href={`https://www.whatsapp.com`}
                 target="_blank"
                 className="flex space-x-3"
               >
@@ -78,7 +78,7 @@ export function Footer() {
                 <p className="text-xs text">Whatsapp</p>
               </Link>
               <Link
-                href={`www.youtube.com`}
+                href={`https://www.youtube.com`}
                 target="_blank"
                 className="flex space-x-3"
               >

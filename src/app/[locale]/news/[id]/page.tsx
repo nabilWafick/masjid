@@ -10,7 +10,7 @@ const ContentPage: FC = () => {
     date: "2024-03-10",
     image:
       "https://images.unsplash.com/photo-1614061811858-dde54a522f5e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFtYWRhbiUyMGZvb2R8ZW58MHx8MHx8fDA%3D",
-    excerpt: `Le ramadan est un moment important pour les musulmans qui respectent les injonctions de la tradition. Il apporte des changements significatifs dans le quotidien des croyants : les repas sont planifiés autour des heures de jeûne, avec le Suhur (repas pré-aube) avant le lever du soleil et l'Iftar (rupture du jeûne) après le coucher du soleil.\n
+    description: `Le ramadan est un moment important pour les musulmans qui respectent les injonctions de la tradition. Il apporte des changements significatifs dans le quotidien des croyants : les repas sont planifiés autour des heures de jeûne, avec le Suhur (repas pré-aube) avant le lever du soleil et l'Iftar (rupture du jeûne) après le coucher du soleil.\n
 
 Quand débute le mois du ramadan ? C'est la question que tous les musulmans suivant le jeûne se posent chaque année. Et souvent est mise en avant une incertitude sur la manière de fixer la date, qui change tous les ans. La date du début du ramadan est encore indicative, mais on sait tout de même quand les musulmans doivent se préparer au jeûne.
 
@@ -85,7 +85,7 @@ La Prière Tarawih - Après l'iftar, de nombreux musulmans se rendent à la mosq
         </CardHeader>
         <CardContent className="">
           <p className="text-foreground text-sm  border-y border-foreground/25 py-7">
-            {news.excerpt}
+            {news.description}
           </p>
           <span className=" w-full  flex justify-end items-end pt-5 pr-3 ">
             <div className=" flex justify-between items-center space-x-3">

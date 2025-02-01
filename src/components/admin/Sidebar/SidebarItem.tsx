@@ -2,8 +2,17 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SidebarDropdown from "./SidebarDropdown";
+import { MenuItem } from ".";
 
-const SidebarItem = ({ item, pageName, setPageName }: any) => {
+const SidebarItem = ({
+  item,
+  pageName,
+  setPageName,
+}: {
+  item: MenuItem;
+  pageName: string;
+  setPageName: (arg: string) => void;
+}) => {
   const handleClick = () => {
     const updatedPageName =
       pageName !== item.label.toLowerCase() ? item.label.toLowerCase() : "";

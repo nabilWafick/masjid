@@ -1,19 +1,37 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+//import React, { useEffect, useRef, useState } from "react";
+//import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import ClickOutside from "../ClickOutside";
 import SidebarItem from "./SidebarItem";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { ReactNode } from "react";
 
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
 }
 
-const menuGroups = [
+export interface MenuItemGroup {
+  name: string;
+  menuItems: MenuItem[];
+}
+
+export interface MenuItem {
+  icon: ReactNode;
+  label: string;
+  route: string;
+  children?: Item[];
+}
+
+export interface Item {
+  label: string;
+  route: string;
+}
+
+const menuGroups: MenuItemGroup[] = [
   {
     name: "MENU",
     menuItems: [
@@ -323,13 +341,13 @@ const menuGroups = [
 ];
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
-  const pathname = usePathname();
+  //  const pathname = usePathname();
   const [pageName, setPageName] = useLocalStorage("selectedMenu", "dashboard");
 
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside
-        className={`fixed left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 ${
+        className={`fixed left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-muted duration-300 ease-linear lg:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -377,7 +395,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </h3>
 
                 <ul className="mb-6 flex flex-col gap-1.5">
-                  {group.menuItems.map((menuItem, menuIndex) => (
+                  {group.menuItems?.map((menuItem, menuIndex) => (
                     <SidebarItem
                       key={menuIndex}
                       item={menuItem}

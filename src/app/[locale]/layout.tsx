@@ -1,5 +1,3 @@
-import { Footer } from "@/components/footer";
-import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";

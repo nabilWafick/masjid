@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SidebarDropdown from "./SidebarDropdown";
-import { MenuItem } from ".";
+import { MenuItem, MItem } from ".";
 
 const SidebarItem = ({
   item,
@@ -21,10 +21,10 @@ const SidebarItem = ({
 
   const pathname = usePathname();
 
-  const isActive = (item: any) => {
+  const isActive = (item: MenuItem | MItem): boolean => {
     if (item.route === pathname) return true;
-    if (item.children) {
-      return item.children.some((child: any) => isActive(child));
+    if ("children" in item) {
+      return item.children.some((child: MItem) => isActive(child) ?? false);
     }
     return false;
   };
@@ -70,7 +70,7 @@ const SidebarItem = ({
               pageName !== item.label.toLowerCase() && "hidden"
             }`}
           >
-            <SidebarDropdown item={item.children} />
+            <SidebarDropdown items={item.children} />
           </div>
         )}
       </li>

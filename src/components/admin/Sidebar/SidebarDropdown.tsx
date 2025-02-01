@@ -1,14 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { MItem } from "./index";
 
-const SidebarDropdown = ({ item }: any) => {
+const SidebarDropdown = ({ items }: { items: MItem[] }) => {
   const pathname = usePathname();
 
   return (
     <>
       <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
-        {item.map((item: any, index: number) => (
+        {items.map((item: MItem, index: number) => (
           <li key={index}>
             <Link
               href={item.route}

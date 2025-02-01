@@ -43,9 +43,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <NextIntlClientProvider messages={messages}>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
+            <div>{children}</div>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

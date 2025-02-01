@@ -2,8 +2,8 @@
 
 //import { useTranslation } from "react-i18next"
 import { ActivitiesCard } from "@/components/activities/activities-card";
+import PageCounter from "@/components/ui/page-counter";
 import { PageHeader } from "@/components/ui/page-header";
-import PageCounter from "../../../components/ui/page-counter";
 
 export default function ActivitiesPage() {
   // const { t } = useTranslation()

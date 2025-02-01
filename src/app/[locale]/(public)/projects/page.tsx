@@ -2,8 +2,8 @@
 
 //import { useTranslation } from "react-i18next"
 import { ProjectCard } from "@/components/projects/projects-card";
+import PageCounter from "@/components/ui/page-counter";
 import { PageHeader } from "@/components/ui/page-header";
-import PageCounter from "../../../components/ui/page-counter";
 
 export default function ProjectPage() {
   // const { t } = useTranslation()

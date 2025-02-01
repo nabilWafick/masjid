@@ -2,8 +2,8 @@
 
 //import { useTranslation } from "react-i18next"
 import { NewsCard } from "@/components/news/news-card";
+import PageCounter from "@/components/ui/page-counter";
 import { PageHeader } from "@/components/ui/page-header";
-import PageCounter from "../../../components/ui/page-counter";
 
 export default function NewsPage() {
   // const { t } = useTranslation()

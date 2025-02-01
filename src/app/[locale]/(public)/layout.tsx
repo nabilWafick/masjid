@@ -1,12 +1,11 @@
+import { Footer } from "@/components/footer";
 import Navbar from "@/components/navbar";
-import { FC, ReactNode } from "react";
-import { Footer } from "react-day-picker";
 
-interface PublicLayoutProps {
-  children: ReactNode;
-}
-
-const PublicLayout: FC<PublicLayoutProps> = ({ children }) => {
+export default function PublicLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <Navbar />
@@ -14,6 +13,4 @@ const PublicLayout: FC<PublicLayoutProps> = ({ children }) => {
       <Footer />
     </>
   );
-};
-
-export default PublicLayout;
+}

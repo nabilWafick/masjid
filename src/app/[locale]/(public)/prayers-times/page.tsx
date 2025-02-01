@@ -301,7 +301,11 @@ const PrayerTimesPage: React.FC = () => {
                   {prayerTimes.map((day, index) => (
                     <tr
                       key={index}
-                      className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                      className={
+                        index % 2 === 0
+                          ? "bg-background text-foreground"
+                          : "bg-muted text-muted-foreground"
+                      }
                     >
                       <td className="border px-4 py-2">
                         {formatGregorianDate(day.date.gregorian.date)}

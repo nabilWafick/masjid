@@ -41,7 +41,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <NextIntlClientProvider messages={messages}>
-            <div>{children}</div>
+            {children}
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

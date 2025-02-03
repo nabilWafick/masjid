@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 const AdminUsersPage: FC = () => {
-  return <div>ADMIN</div>;
+  return <div>USERS</div>;
 };
 
 export default AdminUsersPage;

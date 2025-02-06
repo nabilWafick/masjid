@@ -1,0 +1,144 @@
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model MultiLanguageFields {
+    id String @id @default(uuid()) @map("_id")
+    ar String
+    en String
+    fr String
+
+    // Relations
+    sermonsTopics          Sermons?    @relation("sermonTopic")
+    sermonsDescriptions    Sermons?    @relation("sermonDescription")
+    projectsNames          Projects?   @relation("projectName")
+    projectsDescriptions   Projects?   @relation("projectDescription")
+    newsTitles             News?       @relation("newsTitle")
+    newsDescriptions       News?       @relation("newsDescription")
+    activitiesNames        Activities? @relation("activityName")
+    activitiesPeriods      Activities? @relation("activityPeriod")
+    activitiesDescriptions Activities? @relation("activityDescription")
+
+    @@map("multi_language_fields")
+}
+
+model Subscribers {
+    id    String @id @default(uuid()) @map("_id")
+    email String @unique
+
+    @@map("subscribers")
+}
+
+model Users {
+    id          String  @id @default(uuid()) @map("_id")
+    name        String
+    firstnames  String
+    email       String  @unique
+    phoneNumber String
+    isAdmin     Boolean @default(false)
+    password    String
+
+    preachedSermons   Sermons[]    @relation("preachedBy")
+    publishedSermons  Sermons[]    @relation("publishedBy")
+    updatedSermons    Sermons[]    @relation("updatedBy")
+    donations         Donations[]
+    createdProjects   Projects[]   @relation("createdBy")
+    updatedProjects   Projects[]   @relation("updatedBy")
+    publishedNews     News[]       @relation("publishedBy")
+    updatedNews       News[]       @relation("updatedBy")
+    createdActivities Activities[] @relation("createdBy")
+    updatedActivities Activities[] @relation("updatedBy")
+
+    @@map("users")
+}
+
+model Sermons {
+    id            String              @id @default(uuid()) @map("_id")
+    topicId       String              @unique
+    topic         MultiLanguageFields @relation("sermonTopic", fields: [topicId], references: [id])
+    descriptionId String              @unique
+    description   MultiLanguageFields @relation("sermonDescription", fields: [descriptionId], references: [id])
+    video         String
+    preachedById  String
+    preachedBy    Users               @relation("preachedBy", fields: [preachedById], references: [id])
+    publishedById String
+    publishedBy   Users               @relation("publishedBy", fields: [publishedById], references: [id])
+    publishedAt   DateTime            @default(now())
+    updatedById   String
+    updatedBy     Users               @relation("updatedBy", fields: [updatedById], references: [id])
+    updatedAt     DateTime            @default(now())
+
+    @@map("sermons")
+}
+
+model Donations {
+    id          String    @id @default(uuid()) @map("_id")
+    amount      Float
+    projectId   String?
+    project     Projects? @relation(fields: [projectId], references: [id])
+    donatedById String?
+    donatedBy   Users?    @relation(fields: [donatedById], references: [id])
+    donatedAt   DateTime  @default(now())
+
+    @@map("donations")
+}
+
+model Projects {
+    id            String              @id @default(uuid()) @map("_id")
+    nameId        String              @unique
+    name          MultiLanguageFields @relation("projectName", fields: [nameId], references: [id])
+    budget        Float
+    descriptionId String              @unique
+    description   MultiLanguageFields @relation("projectDescription", fields: [descriptionId], references: [id])
+    image         String
+    createdById   String
+    createdBy     Users               @relation("createdBy", fields: [createdById], references: [id])
+    createdAt     DateTime            @default(now())
+    updatedById   String
+    updatedBy     Users               @relation("updatedBy", fields: [updatedById], references: [id])
+    updatedAt     DateTime            @default(now())
+    donations     Donations[]
+
+    @@map("projects")
+}
+
+model News {
+    id            String              @id @default(uuid()) @map("_id")
+    titleId       String              @unique
+    title         MultiLanguageFields @relation("newsTitle", fields: [titleId], references: [id])
+    descriptionId String              @unique
+    description   MultiLanguageFields @relation("newsDescription", fields: [descriptionId], references: [id])
+    image         String
+    publishedById String
+    publishedBy   Users               @relation("publishedBy", fields: [publishedById], references: [id])
+    publishedAt   DateTime            @default(now())
+    updatedById   String
+    updatedBy     Users               @relation("updatedBy", fields: [updatedById], references: [id])
+    updatedAt     DateTime            @default(now())
+
+    @@map("news")
+}
+
+model Activities {
+    id            String              @id @default(uuid()) @map("_id")
+    nameId        String              @unique
+    name          MultiLanguageFields @relation("activityName", fields: [nameId], references: [id])
+    periodId      String              @unique
+    period        MultiLanguageFields @relation("activityPeriod", fields: [periodId], references: [id])
+    descriptionId String              @unique
+    description   MultiLanguageFields @relation("activityDescription", fields: [descriptionId], references: [id])
+    image         String
+    createdById   String
+    createdBy     Users               @relation("createdBy", fields: [createdById], references: [id])
+    createdAt     DateTime            @default(now())
+    updatedById   String
+    updatedBy     Users               @relation("updatedBy", fields: [updatedById], references: [id])
+    updatedAt     DateTime            @default(now())
+
+    @@map("activities")
+}

@@ -1,27 +1,27 @@
 import { validate as isUuid } from "uuid";
-import User, { UserJson } from "./user.model";
+import Users, { UsersJson } from "./user.model";
 import Project, { ProjectJson } from "./project.model";
 
-interface DonationJson {
+interface DonationsJson {
   id: string;
   amount: number;
   project?: ProjectJson;
-  donatedBy: UserJson;
+  donatedBy?: UsersJson;
   donatedAt: string;
 }
 
-class Donation {
+class Donations {
   id: string;
   amount: number;
   project?: Project;
-  donatedBy: User;
+  donatedBy?: Users;
   donatedAt: Date;
 
   constructor(
     id: string,
     amount: number,
-    donatedBy: User,
     donatedAt: Date,
+    donatedBy?: Users,
     project?: Project
   ) {
     if (!isUuid(id)) {
@@ -34,26 +34,24 @@ class Donation {
     this.donatedAt = donatedAt;
   }
 
-  static fromJson(data: DonationJson): Donation {
-    return new Donation(
+  static fromJson(data: DonationsJson): Donations {
+    return new Donations(
       data.id,
       data.amount,
-      User.fromJson(data.donatedBy),
       new Date(data.donatedAt),
+      data.donatedBy ? Users.fromJson(data.donatedBy) : undefined,
       data.project ? Project.fromJson(data.project) : undefined
     );
   }
 
-  toJson(): DonationJson {
+  toJson(): DonationsJson {
     return {
       id: this.id,
-
       amount: this.amount,
-
       donatedBy: this.donatedBy,
       donatedAt: this.donatedAt.toUTCString(),
     };
   }
 }
 
-export default Donation;
+export default Donations;

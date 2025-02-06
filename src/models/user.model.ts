@@ -1,26 +1,32 @@
 import { validate as isUuid, v4 as uuidv4 } from "uuid";
 
-export interface UserJson {
+export interface UsersJson {
   id: string;
   name: string;
   firstnames: string;
   email: string;
   phoneNumber: string;
+  isAdmin: string;
+  password: string;
 }
 
-class User {
+class Users {
   id: string;
   name: string;
   firstnames: string;
   email: string;
   phoneNumber: string;
+  isAdmin: string;
+  password: string;
 
   constructor(
     id: string = uuidv4(),
     name: string,
     firstnames: string,
     email: string,
-    phoneNumber: string
+    phoneNumber: string,
+    isAdmin: string,
+    password: string
   ) {
     if (!isUuid(id)) {
       throw new Error("Invalid UUID");
@@ -30,27 +36,33 @@ class User {
     this.firstnames = firstnames;
     this.email = email;
     this.phoneNumber = phoneNumber;
+    this.isAdmin = isAdmin;
+    this.password = password;
   }
 
-  static fromJson(data: UserJson): User {
-    return new User(
+  static fromJson(data: UsersJson): Users {
+    return new Users(
       data.id,
       data.name,
       data.firstnames,
       data.email,
-      data.phoneNumber
+      data.phoneNumber,
+      data.isAdmin,
+      data.password
     );
   }
 
-  toJson(): UserJson {
+  toJson(): UsersJson {
     return {
       id: this.id,
       name: this.name,
       firstnames: this.firstnames,
       email: this.email,
       phoneNumber: this.phoneNumber,
+      isAdmin: this.isAdmin,
+      password: this.password,
     };
   }
 }
 
-export default User;
+export default Users;

@@ -2,36 +2,41 @@ import { validate as isUuid } from "uuid";
 import MultiLanguageText, {
   MultiLanguageTextJson,
 } from "./multi-language-text.model";
-import User, { UserJson } from "./user.model";
+import Users, { UsersJson } from "./user.model";
 
-export interface PreachJson {
+export interface SermonJson {
   id: string;
   topic: MultiLanguageTextJson;
   description: MultiLanguageTextJson;
   video: string;
-  preachedBy: UserJson;
-  publishedBy: UserJson;
+  preachedBy: UsersJson;
+  publishedBy: UsersJson;
   publishedAt: string;
+  updatedBy: UsersJson;
+  updatedAt: string;
 }
 
-class Preach {
+class Sermon {
   id: string;
   topic: MultiLanguageText;
   description: MultiLanguageText;
   video: string;
-  preachedBy: User;
-  publishedBy: User;
+  preachedBy: Users;
+  publishedBy: Users;
   publishedAt: Date;
+  updatedBy: UsersJson;
+  updatedAt: Date;
 
   constructor(
     id: string,
     topic: MultiLanguageText,
     description: MultiLanguageText,
     video: string,
-    preachedBy: User,
-    publishedBy: User,
-
-    publishedAt: Date
+    preachedBy: Users,
+    publishedBy: Users,
+    publishedAt: Date,
+    updatedBy: UsersJson,
+    updatedAt: Date
   ) {
     if (!isUuid(id)) {
       throw new Error("Invalid UUID");
@@ -43,21 +48,25 @@ class Preach {
     this.preachedBy = preachedBy;
     this.publishedBy = publishedBy;
     this.publishedAt = publishedAt;
+    this.updatedBy = updatedBy;
+    this.updatedAt = updatedAt;
   }
 
-  static fromJson(data: PreachJson): Preach {
-    return new Preach(
+  static fromJson(data: SermonJson): Sermon {
+    return new Sermon(
       data.id,
       MultiLanguageText.fromJson(data.topic),
       MultiLanguageText.fromJson(data.description),
       data.video,
-      User.fromJson(data.preachedBy),
-      User.fromJson(data.publishedBy),
-      new Date(data.publishedAt)
+      Users.fromJson(data.preachedBy),
+      Users.fromJson(data.publishedBy),
+      new Date(data.publishedAt),
+      Users.fromJson(data.updatedBy),
+      new Date(data.updatedAt)
     );
   }
 
-  toJson(): PreachJson {
+  toJson(): SermonJson {
     return {
       id: this.id,
       topic: this.topic.toJson(),
@@ -66,8 +75,10 @@ class Preach {
       preachedBy: this.preachedBy.toJson(),
       publishedBy: this.publishedBy.toJson(),
       publishedAt: this.publishedAt.toUTCString(),
+      updatedBy: this.updatedBy,
+      updatedAt: this.updatedAt.toUTCString(),
     };
   }
 }
 
-export default Preach;
+export default Sermon;

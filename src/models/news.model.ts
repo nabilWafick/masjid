@@ -2,15 +2,17 @@ import { validate as isUuid } from "uuid";
 import MultiLanguageText, {
   MultiLanguageTextJson,
 } from "./multi-language-text.model";
-import User, { UserJson } from "./user.model";
+import Users, { UsersJson } from "./user.model";
 
 export interface NewsJson {
   id: string;
   title: MultiLanguageTextJson;
   description: MultiLanguageTextJson;
   image: string;
-  publishedBy: UserJson;
+  publishedBy: UsersJson;
   publishedAt: string;
+  updatedBy: UsersJson;
+  updatedAt: string;
 }
 
 class News {
@@ -18,16 +20,20 @@ class News {
   title: MultiLanguageText;
   description: MultiLanguageText;
   image: string;
-  publishedBy: User;
+  publishedBy: Users;
   publishedAt: Date;
+  updatedBy: Users;
+  updatedAt: Date;
 
   constructor(
     id: string,
     title: MultiLanguageText,
     description: MultiLanguageText,
     image: string,
-    publishedBy: User,
-    publishedAt: Date
+    publishedBy: Users,
+    publishedAt: Date,
+    updatedBy: Users,
+    updatedAt: Date
   ) {
     if (!isUuid(id)) {
       throw new Error("Invalid UUID");
@@ -38,6 +44,8 @@ class News {
     this.image = image;
     this.publishedBy = publishedBy;
     this.publishedAt = publishedAt;
+    this.updatedBy = updatedBy;
+    this.updatedAt = updatedAt;
   }
 
   static fromJson(data: NewsJson): News {
@@ -46,8 +54,10 @@ class News {
       MultiLanguageText.fromJson(data.title),
       MultiLanguageText.fromJson(data.description),
       data.image,
-      User.fromJson(data.publishedBy),
-      new Date(data.publishedAt)
+      Users.fromJson(data.publishedBy),
+      new Date(data.publishedAt),
+      Users.fromJson(data.updatedBy),
+      new Date(data.updatedAt)
     );
   }
 
@@ -59,6 +69,8 @@ class News {
       image: this.image,
       publishedBy: this.publishedBy,
       publishedAt: this.publishedAt.toUTCString(),
+      updatedBy: this.updatedBy,
+      updatedAt: this.updatedAt.toUTCString(),
     };
   }
 }

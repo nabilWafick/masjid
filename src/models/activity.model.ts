@@ -2,26 +2,30 @@ import { validate as isUuid } from "uuid";
 import MultiLanguageText, {
   MultiLanguageTextJson,
 } from "./multi-language-text.model";
-import User, { UserJson } from "./user.model";
+import Users, { UsersJson } from "./user.model";
 
-export interface ActivityJson {
+export interface ActivitiesJson {
   id: string;
   name: MultiLanguageTextJson;
   period: MultiLanguageTextJson;
   description: MultiLanguageTextJson;
   image: string;
-  createdBy: UserJson;
+  createdBy: UsersJson;
   createdAt: string;
+  updatedBy: UsersJson;
+  updatedAt: string;
 }
 
-class Activity {
+class Activities {
   id: string;
   name: MultiLanguageText;
   period: MultiLanguageText;
   description: MultiLanguageText;
   image: string;
-  createdBy: User;
+  createdBy: Users;
   createdAt: Date;
+  updatedBy: Users;
+  updatedAt: Date;
 
   constructor(
     id: string,
@@ -29,8 +33,10 @@ class Activity {
     period: MultiLanguageText,
     description: MultiLanguageText,
     image: string,
-    createdBy: User,
-    createdAt: Date
+    createdBy: Users,
+    createdAt: Date,
+    updatedBy: Users,
+    updatedAt: Date
   ) {
     if (!isUuid(id)) {
       throw new Error("Invalid UUID");
@@ -42,21 +48,25 @@ class Activity {
     this.image = image;
     this.createdBy = createdBy;
     this.createdAt = createdAt;
+    this.updatedBy = updatedBy;
+    this.updatedAt = updatedAt;
   }
 
-  static fromJson(data: ActivityJson): Activity {
-    return new Activity(
+  static fromJson(data: ActivitiesJson): Activities {
+    return new Activities(
       data.id,
       MultiLanguageText.fromJson(data.name),
       MultiLanguageText.fromJson(data.period),
       MultiLanguageText.fromJson(data.description),
       data.image,
-      User.fromJson(data.createdBy),
-      new Date(data.createdAt)
+      Users.fromJson(data.createdBy),
+      new Date(data.createdAt),
+      Users.fromJson(data.updatedBy),
+      new Date(data.updatedAt)
     );
   }
 
-  toJson(): ActivityJson {
+  toJson(): ActivitiesJson {
     return {
       id: this.id,
       name: this.name.toJson(),
@@ -65,8 +75,10 @@ class Activity {
       image: this.image,
       createdBy: this.createdBy,
       createdAt: this.createdAt.toUTCString(),
+      updatedBy: this.updatedBy,
+      updatedAt: this.updatedAt.toUTCString(),
     };
   }
 }
 
-export default Activity;
+export default Activities;

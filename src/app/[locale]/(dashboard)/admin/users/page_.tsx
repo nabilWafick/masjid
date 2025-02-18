@@ -1,27 +1,20 @@
 "use client";
 
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useCallback, useEffect, useState } from "react";
+import React from "react";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
 } from "@/components/ui/dialog";
-import { Check, Loader2, Pencil, Plus, Trash2, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Check, Pencil, Plus, Trash2, X } from "lucide-react";
+import { z } from "zod";
 
-const userFormSchema = z.object({
+const userSchema = z.object({
   id: z.string().optional(),
   name: z
     .string()
@@ -38,42 +31,111 @@ const userFormSchema = z.object({
   password: z.string().optional(),
 });
 
-type UserFormData = z.infer<typeof userFormSchema>;
+type UserFormData = z.infer<typeof userSchema>;
 
-export const useUserForm = (initialData?: UserFormData) => {
-  const form = useForm<UserFormData>({
-    resolver: zodResolver(userFormSchema),
-    defaultValues: {
-      id: initialData?.id,
-      name: initialData?.name || "",
-      firstnames: initialData?.firstnames || "",
-      email: initialData?.email || "",
-      isAdmin: initialData?.isAdmin || false,
-      phoneNumber: initialData?.phoneNumber || "",
-      password: initialData?.password ?? undefined,
-    },
+// Custom hook for form handling
+function useUserForm(
+  initialData?: UserFormData,
+  onSubmit?: (data: UserFormData) => Promise<void>
+) {
+  const [formData, setFormData] = React.useState<UserFormData>({
+    name: initialData?.name || "",
+    firstnames: initialData?.firstnames || "",
+    email: initialData?.email || "",
+    isAdmin: initialData?.isAdmin || false,
+    phoneNumber: initialData?.phoneNumber || "",
+    password: initialData?.password ?? undefined,
   });
+  const [errors, setErrors] = React.useState<Record<string, string[]>>({});
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
-  const onSubmit = async (data: UserFormData) => {
+  React.useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
+  const validateForm = () => {
     try {
-      console.log("Form submitted:", data);
+      userSchema.parse(formData);
+      setErrors({});
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const newErrors: Record<string, string[]> = {};
+        error.errors.forEach((err) => {
+          const path = err.path.join(".");
+          if (!newErrors[path]) {
+            newErrors[path] = [];
+          }
+          newErrors[path].push(err.message);
+        });
+        setErrors(newErrors);
+      }
+      return false;
+    }
+  };
 
-      form.reset();
+  const handleChange = (field: keyof UserFormData, value: string | boolean) => {
+    setFormData((prev) => {
+      return {
+        ...prev,
+        [field]: value,
+      };
+    });
+
+    // Clear related errors
+    if (errors[field]) {
+      setErrors((prev) => ({
+        ...prev,
+        [field]: [],
+      }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateForm() || !onSubmit) return;
+
+    setIsSubmitting(true);
+    try {
+      await onSubmit(formData);
+      if (!initialData) {
+        setFormData({
+          name: "",
+          firstnames: "",
+          email: "",
+          phoneNumber: "",
+          isAdmin: false,
+          password: undefined,
+        });
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return {
-    form,
-    onSubmit: form.handleSubmit(onSubmit),
-    errors: form.formState.errors,
-    isSubmitting: form.formState.isSubmitting,
-    register: form.register,
-    setValue: form.setValue,
-    watch: form.watch,
+    formData,
+    errors,
+    isSubmitting,
+    handleChange,
+    handleSubmit,
+    resetForm: () => {
+      setFormData({
+        name: "",
+        firstnames: "",
+        email: "",
+        phoneNumber: "",
+        isAdmin: false,
+        password: undefined,
+      });
+      setErrors({});
+    },
   };
-};
+}
 
 type UserFormProps = {
   open: boolean;
@@ -83,28 +145,39 @@ type UserFormProps = {
   onSuccess?: () => void;
 };
 
-export function UserForm({
+const UserForm = ({
   open,
   onOpenChange,
   initialData,
-}: // onSubmit,
-//  onSuccess,
-UserFormProps) {
-  const { form, onSubmit, errors, isSubmitting, register, setValue } =
-    useUserForm();
+  onSubmit,
+  onSuccess,
+}: UserFormProps) => {
+  const {
+    formData,
+    errors,
+    isSubmitting,
+    handleChange,
+    handleSubmit: submit,
+    resetForm,
+  } = useUserForm(initialData, async (data) => {
+    await onSubmit(data);
+    onOpenChange(false);
+    onSuccess?.();
+  });
 
   const isUpdateMode = Boolean(initialData);
 
-  useEffect(() => {
+  // Reset form when dialog closes
+  React.useEffect(() => {
     if (!open && !initialData) {
-      form.reset();
+      resetForm();
     }
-  }, [open, initialData, form.reset]);
+  }, [open, initialData, resetForm]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] bg-muted z-99999 max-h-[700px] overflow-scroll">
-        <form onSubmit={onSubmit}>
+      <DialogContent className="sm:max-w-[600px]">
+        <form onSubmit={submit}>
           <DialogHeader>
             <DialogTitle>
               {isUpdateMode ? "Edit User" : "Add New User"}
@@ -117,69 +190,68 @@ UserFormProps) {
           </DialogHeader>
 
           <div className="grid gap-6 py-4">
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="firstnames">Firstnames</Label>
-                <Input id="firstName" {...register("firstnames")} />
-                {errors.firstnames && (
-                  <Alert variant="destructive" className="mt-2">
-                    <AlertDescription>
-                      {errors.firstnames.message}
-                    </AlertDescription>
-                  </Alert>
-                )}
-              </div>
-              <div>
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" {...register("name")} />
-                {errors.name && (
-                  <Alert variant="destructive" className="mt-2">
-                    <AlertDescription>{errors.name.message}</AlertDescription>
-                  </Alert>
-                )}
-              </div>
+            <div className="grid gap-2">
+              <label className="text-sm font-medium">Namr</label>
+              <input
+                type="name"
+                value={formData.name}
+                onChange={(e) => handleChange("name", e.target.value)}
+                className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              />
+              {errors.name?.map((error, index) => (
+                <span key={index} className="text-sm text-red-500">
+                  {error}
+                </span>
+              ))}
+            </div>
 
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" {...register("email")} />
-                {errors.email && (
-                  <Alert variant="destructive" className="mt-2">
-                    <AlertDescription>{errors.email.message}</AlertDescription>
-                  </Alert>
-                )}
-              </div>
+            <div className="grid gap-2">
+              <label className="text-sm font-medium">Email</label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) => handleChange("email", e.target.value)}
+                className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              />
+              {errors.email?.map((error, index) => (
+                <span key={index} className="text-sm text-red-500">
+                  {error}
+                </span>
+              ))}
+            </div>
 
-              <div>
-                <Label htmlFor="phoneNumber">Phone</Label>
-                <Input
-                  id="phoneNumber"
-                  type="tel"
-                  {...register("phoneNumber")}
-                />
-                {errors.phoneNumber && (
-                  <Alert variant="destructive" className="mt-2">
-                    <AlertDescription>
-                      {errors.phoneNumber.message}
-                    </AlertDescription>
-                  </Alert>
-                )}
-              </div>
+            <div className="grid gap-2">
+              <label className="text-sm font-medium">Phone</label>
+              <input
+                type="tel"
+                value={formData.phoneNumber}
+                onChange={(e) => handleChange("phoneNumber", e.target.value)}
+                className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+                placeholder="+1234567890"
+              />
+              {errors.phone?.map((error, index) => (
+                <span key={index} className="text-sm text-red-500">
+                  {error}
+                </span>
+              ))}
+            </div>
 
-              <div>
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  {...register("password")}
-                />
-                {errors.password && (
-                  <Alert variant="destructive" className="mt-2">
-                    <AlertDescription>
-                      {errors.password.message}
-                    </AlertDescription>
-                  </Alert>
-                )}
-              </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="active"
+                checked={formData.isAdmin}
+                onChange={(e) => handleChange("isAdmin", e.target.checked)}
+                className="h-4 w-4"
+              />
+              <label htmlFor="active" className="text-sm font-medium">
+                Admin
+              </label>
+              {errors.active?.map((error, index) => (
+                <span key={index} className="text-sm text-red-500">
+                  {error}
+                </span>
+              ))}
             </div>
           </div>
 
@@ -203,16 +275,20 @@ UserFormProps) {
       </DialogContent>
     </Dialog>
   );
-}
+};
 
 // Custom hook for managing users
 function useUserManagement() {
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<UserFormData | undefined>();
-  const [users, setUsers] = useState<Array<UserFormData & { id: string }>>([]);
-  const [loading, setLoading] = useState(true);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [selectedUser, setSelectedUser] = React.useState<
+    UserFormData | undefined
+  >();
+  const [users, setUsers] = React.useState<
+    Array<UserFormData & { id: string }>
+  >([]);
+  const [loading, setLoading] = React.useState(true);
 
-  const fetchUsers = useCallback(async () => {
+  const fetchUsers = React.useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch("/api/users", {
@@ -230,7 +306,7 @@ function useUserManagement() {
     }
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
 
@@ -326,16 +402,12 @@ const AdminUserPage = () => {
   } = useUserManagement();
 
   if (loading) {
-    return (
-      <div className="h-full w-full flex justify-center items-center">
-        <Loader2 className="h-10 w-10 animate-spin text-primary" />
-      </div>
-    );
+    return <div className="p-4">Loading...</div>;
   }
 
   return (
     <div className="p-4">
-      <div className="flex justify-between items-center mb-10">
+      <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">User Management</h1>
         <Button onClick={() => handleOpenChange(true)}>
           <Plus className="w-4 h-4 mr-2" />
@@ -343,9 +415,9 @@ const AdminUserPage = () => {
         </Button>
       </div>
 
-      <div className=" rounded-lg">
+      <div className="border rounded-lg">
         <table className="w-full">
-          <thead className="bg-muted">
+          <thead className="bg-gray-50">
             <tr>
               <th className="px-4 py-2 text-left">Name</th>
               <th className="px-4 py-2 text-left">Firstnames</th>

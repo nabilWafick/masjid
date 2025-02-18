@@ -75,7 +75,7 @@ export function DonationForm() {
       <CardContent>
         <form onSubmit={onSubmit} className="space-y-6">
           <div className="space-y-4">
-            <Label>Montant du don</Label>
+            <Label htmlFor="">Montant du don</Label>
             <div className="grid grid-cols-3 gap-4">
               {["500", "1000", "2000", "5000", "10000"].map((amount) => (
                 <Button

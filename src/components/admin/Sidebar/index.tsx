@@ -44,37 +44,37 @@ const menuGroups: MenuItemGroup[] = [
     name: "MENU",
     menuItems: [
       {
-        icon: <LayoutDashboardIcon />,
+        icon: <LayoutDashboardIcon className="text-primary" />,
         label: "Dashboard",
         route: "/en/admin/dashboard",
         children: [],
       },
       {
-        icon: <LucideNewspaper />,
+        icon: <LucideNewspaper className="text-primary" />,
         label: "News",
         route: "/en/admin/news",
         children: [],
       },
       {
-        icon: <ActivitySquareIcon />,
+        icon: <ActivitySquareIcon className="text-primary" />,
         label: "Activities",
         route: "/en/admin/activities",
         children: [],
       },
       {
-        icon: <ListTodo />,
+        icon: <ListTodo className="text-primary" />,
         label: "Projects",
         route: "/en/admin/projects",
         children: [],
       },
       {
-        icon: <Users />,
+        icon: <Users className="text-primary" />,
         label: "Users",
         route: "/en/admin/users",
         children: [],
       },
       {
-        icon: <UserCheck />,
+        icon: <UserCheck className="text-primary" />,
         label: "Subscribers",
         route: "/en/admin/subscribers",
         children: [],
@@ -90,7 +90,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside
-        className={`fixed left-0 top-0 z-9999 flex h-screen w-60 flex-col overflow-y-hidden bg-primary duration-300 ease-linear lg:translate-x-0 ${
+        className={`fixed left-0 top-0 z-9999 flex h-screen w-55 flex-col overflow-y-hidden bg-muted duration-300 ease-linear lg:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -134,7 +134,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6">
             {menuGroups.map((group, groupIndex) => (
               <div key={groupIndex}>
-                <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+                <h3 className="mb-4 ml-4 text-sm font-semibold text-primary">
                   {group.name}
                 </h3>
 

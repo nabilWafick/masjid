@@ -18,7 +18,7 @@ export default function DefaultLayout({
         {/* <!-- ===== Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Start ===== --> */}
-        <div className="relative flex flex-1 flex-col lg:ml-60 ">
+        <div className="relative flex flex-1 flex-col lg:ml-55 ">
           {/* <!-- ===== Header Start ===== --> */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           {/* <!-- ===== Header End ===== --> */}

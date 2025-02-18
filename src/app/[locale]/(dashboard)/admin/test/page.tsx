@@ -13,37 +13,46 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Pencil, Plus } from "lucide-react";
+import { validateMultiLanguageField } from "@/lib/utils";
 
-// Updated FormData type to include date
-type FormData = {
-  username: string;
-  email: string;
-  message: string;
-  date: string; // Using string for date
+type MultiLanguageField = {
+  ar: string;
+  en: string;
+  fr: string;
 };
 
-type DialogFormProps = {
+type SermonData = {
+  id?: string;
+  topic: MultiLanguageField;
+  description: MultiLanguageField;
+  video: string;
+  preachedById: string;
+  publishedById: string;
+};
+
+type SermonFormProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  initialData?: FormData;
-  onSubmit: (data: FormData) => Promise<void>;
+  initialData?: SermonData;
+  onSubmit: (data: SermonData) => Promise<void>;
   onSuccess?: () => void;
 };
 
-const DialogForm = ({
+const SermonForm = ({
   open,
   onOpenChange,
   initialData,
   onSubmit,
   onSuccess,
-}: DialogFormProps) => {
-  const [formData, setFormData] = React.useState<FormData>({
-    username: initialData?.username || "",
-    email: initialData?.email || "",
-    message: initialData?.message || "",
-    date: initialData?.date || new Date().toISOString().split("T")[0],
+}: SermonFormProps) => {
+  const [formData, setFormData] = React.useState<SermonData>({
+    topic: initialData?.topic || { ar: "", en: "", fr: "" },
+    description: initialData?.description || { ar: "", en: "", fr: "" },
+    video: initialData?.video || "",
+    preachedById: initialData?.preachedById || "",
+    publishedById: initialData?.publishedById || "",
   });
-  const [errors, setErrors] = React.useState<Partial<FormData>>({});
+  const [errors, setErrors] = React.useState<Record<string, string[]>>({});
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const isUpdateMode = Boolean(initialData);
@@ -55,23 +64,32 @@ const DialogForm = ({
   }, [initialData]);
 
   const validateForm = () => {
-    const newErrors: Partial<FormData> = {};
+    const newErrors: Record<string, string[]> = {};
     let isValid = true;
 
-    if (!formData.username) {
-      newErrors.username = "Username is required";
+    // Validate multi-language fields
+    ["topic", "description"].forEach((field) => {
+      const mlErrors = validateMultiLanguageField(
+        formData[field as keyof SermonData] as MultiLanguageField,
+        field
+      );
+      if (mlErrors.length > 0) {
+        newErrors[field] = mlErrors;
+        isValid = false;
+      }
+    });
+
+    // Validate other fields
+    if (!formData.video.trim()) {
+      newErrors.video = ["Video URL is required"];
       isValid = false;
     }
-    if (!formData.email) {
-      newErrors.email = "Email is required";
+    if (!formData.preachedById.trim()) {
+      newErrors.preachedById = ["Preacher ID is required"];
       isValid = false;
     }
-    if (!formData.message) {
-      newErrors.message = "Message is required";
-      isValid = false;
-    }
-    if (!formData.date) {
-      newErrors.date = "Date is required";
+    if (!formData.publishedById.trim()) {
+      newErrors.publishedById = ["Publisher ID is required"];
       isValid = false;
     }
 
@@ -80,17 +98,31 @@ const DialogForm = ({
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    field: keyof SermonData,
+    value: string | MultiLanguageField,
+    lang?: string
   ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    if (errors[name as keyof FormData]) {
+    setFormData((prev) => {
+      if (lang && typeof value === "string") {
+        return {
+          ...prev,
+          [field]: {
+            ...(prev[field] as MultiLanguageField),
+            [lang]: value,
+          },
+        };
+      }
+      return {
+        ...prev,
+        [field]: value,
+      };
+    });
+
+    // Clear related errors
+    if (errors[field]) {
       setErrors((prev) => ({
         ...prev,
-        [name]: "",
+        [field]: [],
       }));
     }
   };
@@ -107,10 +139,11 @@ const DialogForm = ({
 
       if (!isUpdateMode) {
         setFormData({
-          username: "",
-          email: "",
-          message: "",
-          date: new Date().toISOString().split("T")[0],
+          topic: { ar: "", en: "", fr: "" },
+          description: { ar: "", en: "", fr: "" },
+          video: "",
+          preachedById: "",
+          publishedById: "",
         });
       }
     } catch (error) {
@@ -120,103 +153,98 @@ const DialogForm = ({
     }
   };
 
+  const renderMultiLanguageInputs = (
+    field: keyof SermonData,
+    label: string
+  ) => {
+    const value = formData[field] as MultiLanguageField;
+    const fieldErrors = errors[field] || [];
+
+    return (
+      <div className="grid gap-4">
+        <label className="text-sm font-medium">{label}</label>
+        {Object.keys(value).map((lang) => (
+          <div key={lang} className="grid grid-cols-4 items-center gap-4">
+            <span className="text-right text-sm font-medium">
+              {lang.toUpperCase()}
+            </span>
+            <div className="col-span-3">
+              <input
+                value={value[lang as keyof MultiLanguageField]}
+                onChange={(e) => handleChange(field, e.target.value, lang)}
+                className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              />
+            </div>
+          </div>
+        ))}
+        {fieldErrors.map((error, index) => (
+          <span key={index} className="text-sm text-red-500">
+            {error}
+          </span>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[600px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>
-              {isUpdateMode ? "Edit Item" : "Add New Item"}
+              {isUpdateMode ? "Edit Sermon" : "Add New Sermon"}
             </DialogTitle>
             <DialogDescription>
               {isUpdateMode
-                ? "Edit the information below."
-                : "Fill in the information to add a new item."}
+                ? "Edit the sermon information below."
+                : "Fill in the information to add a new sermon."}
             </DialogDescription>
           </DialogHeader>
 
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label
-                htmlFor="username"
-                className="text-right text-sm font-medium"
-              >
-                Username
-              </label>
-              <div className="col-span-3">
-                <input
-                  id="username"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
-                />
-                {errors.username && (
-                  <span className="text-sm text-red-500">
-                    {errors.username}
-                  </span>
-                )}
-              </div>
+          <div className="grid gap-6 py-4">
+            {renderMultiLanguageInputs("topic", "Topic")}
+            {renderMultiLanguageInputs("description", "Description")}
+
+            <div className="grid gap-2">
+              <label className="text-sm font-medium">Video URL</label>
+              <input
+                value={formData.video}
+                onChange={(e) => handleChange("video", e.target.value)}
+                className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              />
+              {errors.video?.map((error, index) => (
+                <span key={index} className="text-sm text-red-500">
+                  {error}
+                </span>
+              ))}
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="email" className="text-right text-sm font-medium">
-                Email
-              </label>
-              <div className="col-span-3">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
-                />
-                {errors.email && (
-                  <span className="text-sm text-red-500">{errors.email}</span>
-                )}
-              </div>
+            <div className="grid gap-2">
+              <label className="text-sm font-medium">Preacher ID</label>
+              <input
+                value={formData.preachedById}
+                onChange={(e) => handleChange("preachedById", e.target.value)}
+                className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              />
+              {errors.preachedById?.map((error, index) => (
+                <span key={index} className="text-sm text-red-500">
+                  {error}
+                </span>
+              ))}
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="date" className="text-right text-sm font-medium">
-                Date
-              </label>
-              <div className="col-span-3">
-                <input
-                  id="date"
-                  name="date"
-                  type="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                  className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
-                />
-                {errors.date && (
-                  <span className="text-sm text-red-500">{errors.date}</span>
-                )}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label
-                htmlFor="message"
-                className="text-right text-sm font-medium"
-              >
-                Message
-              </label>
-              <div className="col-span-3">
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
-                  rows={4}
-                />
-                {errors.message && (
-                  <span className="text-sm text-red-500">{errors.message}</span>
-                )}
-              </div>
+            <div className="grid gap-2">
+              <label className="text-sm font-medium">Publisher ID</label>
+              <input
+                value={formData.publishedById}
+                onChange={(e) => handleChange("publishedById", e.target.value)}
+                className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm"
+              />
+              {errors.publishedById?.map((error, index) => (
+                <span key={index} className="text-sm text-red-500">
+                  {error}
+                </span>
+              ))}
             </div>
           </div>
 
@@ -242,59 +270,96 @@ const DialogForm = ({
   );
 };
 
-const AdminPage = () => {
+const AdminSermonPage = () => {
   const [dialogOpen, setDialogOpen] = React.useState(false);
-  const [selectedItem, setSelectedItem] = React.useState<
-    FormData | undefined
+  const [selectedSermon, setSelectedSermon] = React.useState<
+    SermonData | undefined
   >();
+  const [sermons, setSermons] = React.useState<
+    Array<SermonData & { id: string }>
+  >([]);
+  const [loading, setLoading] = React.useState(true);
 
-  // Example data with dates
-  const [items, setItems] = React.useState<FormData[]>([
-    {
-      username: "john_doe",
-      email: "john@example.com",
-      message: "Hello world",
-      date: "2024-02-01",
-    },
-    {
-      username: "jane_doe",
-      email: "jane@example.com",
-      message: "Hi there",
-      date: "2024-02-02",
-    },
-  ]);
+  React.useEffect(() => {
+    fetchSermons();
+  }, []);
 
-  const handleAdd = async (data: FormData) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setItems((prev) => [...prev, data]);
+  const fetchSermons = async () => {
+    try {
+      const response = await fetch("/api/sermons", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (!response.ok) throw new Error("Failed to fetch sermons");
+      const data = await response.json();
+      setSermons(data);
+    } catch (error) {
+      console.error("Error fetching sermons:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleUpdate = async (data: FormData) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setItems((prev) =>
-      prev.map((item) => (item.email === selectedItem?.email ? data : item))
-    );
+  const handleAdd = async (data: SermonData) => {
+    try {
+      const response = await fetch("/api/sermons", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error("Failed to create sermon");
+      fetchSermons();
+    } catch (error) {
+      console.error("Error creating sermon:", error);
+      throw error;
+    }
   };
 
-  const handleEdit = (item: FormData) => {
-    setSelectedItem(item);
+  const handleUpdate = async (data: SermonData) => {
+    try {
+      const response = await fetch(`/api/sermons/${selectedSermon?.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error("Failed to update sermon");
+      fetchSermons();
+    } catch (error) {
+      console.error("Error updating sermon:", error);
+      throw error;
+    }
+  };
+
+  const handleEdit = (sermon: SermonData & { id: string }) => {
+    setSelectedSermon(sermon);
     setDialogOpen(true);
   };
 
   const handleOpenChange = (open: boolean) => {
     setDialogOpen(open);
     if (!open) {
-      setSelectedItem(undefined);
+      setSelectedSermon(undefined);
     }
   };
+
+  if (loading) {
+    return <div className="p-4">Loading...</div>;
+  }
 
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+        <h1 className="text-2xl font-bold">Sermon Management</h1>
         <Button onClick={() => setDialogOpen(true)}>
           <Plus className="w-4 h-4 mr-2" />
-          Add New
+          Add New Sermon
         </Button>
       </div>
 
@@ -302,27 +367,27 @@ const AdminPage = () => {
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-4 py-2 text-left">Username</th>
-              <th className="px-4 py-2 text-left">Email</th>
-              <th className="px-4 py-2 text-left">Date</th>
-              <th className="px-4 py-2 text-left">Message</th>
+              <th className="px-4 py-2 text-left">Topic (EN)</th>
+              <th className="px-4 py-2 text-left">Description (EN)</th>
+              <th className="px-4 py-2 text-left">Video</th>
+              <th className="px-4 py-2 text-left">Preacher ID</th>
+              <th className="px-4 py-2 text-left">Publisher ID</th>
               <th className="px-4 py-2 text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {items.map((item, index) => (
-              <tr key={index} className="border-t">
-                <td className="px-4 py-2">{item.username}</td>
-                <td className="px-4 py-2">{item.email}</td>
-                <td className="px-4 py-2">
-                  {new Date(item.date).toLocaleDateString()}
-                </td>
-                <td className="px-4 py-2">{item.message}</td>
+            {sermons.map((sermon) => (
+              <tr key={sermon.id} className="border-t">
+                <td className="px-4 py-2">{sermon.topic.en}</td>
+                <td className="px-4 py-2">{sermon.description.en}</td>
+                <td className="px-4 py-2">{sermon.video}</td>
+                <td className="px-4 py-2">{sermon.preachedById}</td>
+                <td className="px-4 py-2">{sermon.publishedById}</td>
                 <td className="px-4 py-2">
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => handleEdit(item)}
+                    onClick={() => handleEdit(sermon)}
                   >
                     <Pencil className="w-4 h-4 mr-2" />
                     Edit
@@ -334,11 +399,11 @@ const AdminPage = () => {
         </table>
       </div>
 
-      <DialogForm
+      <SermonForm
         open={dialogOpen}
         onOpenChange={handleOpenChange}
-        initialData={selectedItem}
-        onSubmit={selectedItem ? handleUpdate : handleAdd}
+        initialData={selectedSermon}
+        onSubmit={selectedSermon ? handleUpdate : handleAdd}
         onSuccess={() => {
           console.log("Operation successful");
         }}
@@ -347,4 +412,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default AdminSermonPage;

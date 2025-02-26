@@ -2,7 +2,7 @@
 
 //import { useTranslation } from "react-i18next"
 import { ActivitiesCard } from "@/components/activities/activities-card";
-import PageCounter from "@/components/ui/page-counter";
+import PageCounter from "@/components/ui/_page-counter";
 import { PageHeader } from "@/components/ui/page-header";
 
 export default function ActivitiesPage() {

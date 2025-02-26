@@ -1,8 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-export const baseUrl = process.env.BASE_URL ?? "";
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -49,7 +47,7 @@ export const validateEmail = (email: string) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 export const validatePhoneNumber = (phone: string) =>
-  /^\+?[1-9]\d{1,14}$/.test(phone);
+  /^(?:\+22901|0022901)?[0-9]{8}$/.test(phone);
 
 export const validatePassword = (password: string) => password.length >= 8;
 

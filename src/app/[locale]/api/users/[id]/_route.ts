@@ -6,7 +6,6 @@ import argon from "argon2";
 import { validateUserInput } from "@/lib/utils";
 
 const prisma = new PrismaClient();
-const SALT_ROUNDS = 12;
 
 export default async function handler(
   req: NextApiRequest,

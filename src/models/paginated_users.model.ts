@@ -1,36 +1,35 @@
-import { count } from "console";
 import Users, { UsersJson } from "./user.model";
 
 export interface PaginatedUsersJson {
-  count: number;
+  total: number;
   next: string | undefined;
   previous: string | undefined;
-  results: UsersJson[];
+  items: UsersJson[];
 }
 
 class PaginatedUsers {
-  count: number;
+  total: number;
   next: string | undefined;
   previous: string | undefined;
-  results: Users[];
+  items: Users[];
   constructor(
-    count: number,
+    total: number,
     next: string | undefined,
     previous: string | undefined,
-    results: Users[]
+    items: Users[]
   ) {
-    this.count = count;
+    this.total = total;
     this.next = next;
     this.previous = previous;
-    this.results = results;
+    this.items = items;
   }
 
   static fromJson(data: PaginatedUsersJson): PaginatedUsers {
     return new PaginatedUsers(
-      data.count,
+      data.total,
       data.next,
       data.previous,
-      data.results.map((user) => Users.fromJson(user))
+      data.items.map((user) => Users.fromJson(user))
     );
   }
 }

@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 
 const HomePage = () => {
   const params = useParams<{ locale: string }>();
-  const local = params.locale;
+  const locale = params.locale;
   // const { t } = useTranslation();
 
   return (
@@ -36,7 +36,7 @@ const HomePage = () => {
       <section className="py-16 bg-muted">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            <Link href={`/${local}/prayers-times`}>
+            <Link href={`/${locale}/prayers-times`}>
               <Card className="p-6 space-y-4">
                 <h3 className="text-lg font-medium">Horaires des prières</h3>
                 <p className="text-muted-foreground text-sm">
@@ -46,7 +46,7 @@ const HomePage = () => {
               </Card>
             </Link>
 
-            <Link href={`/${local}/activities`}>
+            <Link href={`/${locale}/activities`}>
               <Card className="p-6 space-y-4">
                 <h3 className="text-lg font-medium">Activités</h3>
                 <p className="text-muted-foreground text-sm">
@@ -54,7 +54,7 @@ const HomePage = () => {
                 </p>
               </Card>
             </Link>
-            <Link href={`/${local}/invest`}>
+            <Link href={`/${locale}/invest`}>
               <Card className="p-6 space-y-4">
                 <h3 className="text-lg font-medium">Aumône</h3>
                 <p className="text-muted-foreground text-sm">
@@ -63,7 +63,7 @@ const HomePage = () => {
                 </p>
               </Card>
             </Link>
-            <Link href={`/${local}/contact`}>
+            <Link href={`/${locale}/contact`}>
               <Card className="p-6 space-y-4">
                 <h3 className="text-lg font-medium">Communauté</h3>
                 <p className="text-muted-foreground text-sm">

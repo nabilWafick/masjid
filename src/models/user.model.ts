@@ -1,36 +1,39 @@
 import { validate as isUuid, v4 as uuidv4 } from "uuid";
 
 export interface UsersJson {
-  id: string;
+  id?: string;
   name: string;
   firstnames: string;
   email: string;
   phoneNumber: string;
-  isAdmin: string;
-  password: string;
+  isAdmin: boolean;
+  password?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 class Users {
-  id: string;
+  id?: string;
   name: string;
   firstnames: string;
   email: string;
   phoneNumber: string;
-  isAdmin: string;
-  password: string;
+  isAdmin: boolean;
+  password?: string;
+  createdAt: Date;
+  updatedAt: Date;
 
   constructor(
-    id: string = uuidv4(),
     name: string,
     firstnames: string,
     email: string,
     phoneNumber: string,
-    isAdmin: string,
-    password: string
+    isAdmin: boolean,
+    createdAt: Date,
+    updatedAt: Date,
+    password?: string,
+    id?: string
   ) {
-    if (!isUuid(id)) {
-      throw new Error("Invalid UUID");
-    }
     this.id = id;
     this.name = name;
     this.firstnames = firstnames;
@@ -38,17 +41,21 @@ class Users {
     this.phoneNumber = phoneNumber;
     this.isAdmin = isAdmin;
     this.password = password;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
   }
 
   static fromJson(data: UsersJson): Users {
     return new Users(
-      data.id,
       data.name,
       data.firstnames,
       data.email,
       data.phoneNumber,
       data.isAdmin,
-      data.password
+      new Date(data.createdAt),
+      new Date(data.updatedAt),
+      data.password,
+      data.id
     );
   }
 
@@ -61,6 +68,8 @@ class Users {
       phoneNumber: this.phoneNumber,
       isAdmin: this.isAdmin,
       password: this.password,
+      createdAt: this.createdAt.toUTCString(),
+      updatedAt: this.updatedAt.toUTCString(),
     };
   }
 }

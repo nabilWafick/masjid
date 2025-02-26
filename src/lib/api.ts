@@ -10,7 +10,7 @@ class ApiService {
   private api: AxiosInstance;
 
   constructor() {
-    const baseUrl = process.env.BASE_URL;
+    const baseUrl = "http://localhost:3000";
 
     this.api = axios.create({
       baseURL: `${baseUrl}`,

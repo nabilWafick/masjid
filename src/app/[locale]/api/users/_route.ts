@@ -11,11 +11,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log("=====================> USERS ROUTE");
   try {
     if (req.method === "POST") {
+      console.log("Req body", req.body);
+
       const { name, firstnames, email, phoneNumber, password, isAdmin } =
         req.body;
 
+      /*
+    
       const token = req.headers.authorization?.split(" ")[1];
 
       if (!token)
@@ -30,6 +35,8 @@ export default async function handler(
       if (!decoded.isAdmin)
         return res.status(403).json({ message: "Admin privileges required" });
 
+      */
+
       const validationErrors = validateUserInput(req.body);
       if (validationErrors.length > 0) {
         return res
@@ -37,7 +44,7 @@ export default async function handler(
           .json({ message: "Validation failed", errors: validationErrors });
       }
 
-      const hashedPassword = await argon.hash(password);
+      const hashedPassword = password ? await argon.hash(password) : undefined;
 
       const user = await prisma.users.create({
         data: {
@@ -60,7 +67,7 @@ export default async function handler(
 
       return res.status(201).json(user);
     } else if (req.method === "GET") {
-      // fetch all users with pagination
+      /*
       const token = req.headers.authorization?.split(" ")[1];
       if (!token)
         return res.status(401).json({ message: "Authorization required" });
@@ -87,6 +94,8 @@ export default async function handler(
           ? res.status(200).json(user)
           : res.status(404).json({ message: "User not found" });
       }
+
+      */
 
       // Admin view with pagination
       const { page = "1", pageSize = "20", search = "" } = req.query;
@@ -128,7 +137,7 @@ export default async function handler(
       res.setHeader("Allow", ["POST", "GET"]);
       return res
         .status(405)
-        .json({ message: `Method ${req.method} not allowed` });
+        .json({ message: `Method ${req.method} Not Allowed at all` });
     }
   } catch (error: any) {
     console.error("Users API Error:", error);

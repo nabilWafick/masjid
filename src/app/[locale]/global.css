@@ -71,10 +71,7 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-
-  
 }
-
 
 @layer base {
   * {
@@ -84,23 +81,21 @@
   body {
     @apply bg-background text-foreground;
   }
-   
- ::-webkit-scrollbar {
-   width: 10px;
- }
 
- ::-webkit-scrollbar-track {
-   background: hsl(var(--muted));
- }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
 
- ::-webkit-scrollbar-thumb {
-   background-color: hsl(var(--primary));
-   border-radius: 4px;
- }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
 
- ::-webkit-scrollbar-thumb:hover {
-   background-color: hsl((--primary) / 70%);
- }
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--primary));
+    border-radius: 4px;
+  }
 
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: hsl((--primary) / 70%);
+  }
 }
-

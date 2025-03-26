@@ -50,7 +50,7 @@ export function UsersTable({ users, onEdit, onDelete }: UsersTableProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="text-red-500 border-red-200 hover:bg-red-50"
+                    className="text-red-500 border-red-500/50 hover:bg-red-500/10"
                     onClick={() => onDelete(user.id!)}
                   >
                     <Trash2 className="w-4 h-4 mr-2 text-red-500" />

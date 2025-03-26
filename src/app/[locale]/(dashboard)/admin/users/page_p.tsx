@@ -115,7 +115,7 @@ const AdminUserPage = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4  bg-primary">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Users</h1>
         <Button onClick={() => handleOpenChange(true)}>

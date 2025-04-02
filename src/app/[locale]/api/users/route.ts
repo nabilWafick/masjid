@@ -7,10 +7,8 @@ import argon from "argon2";
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-  //  console.log("=====================> USERS ROUTE");
   try {
     const body = await req.json();
-    console.log("Req body", body);
 
     const { name, firstnames, email, phoneNumber, password, isAdmin } = body;
 

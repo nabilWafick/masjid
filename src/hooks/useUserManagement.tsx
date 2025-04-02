@@ -7,7 +7,6 @@ import { toast } from "@/hooks/useToast";
 import { debounce } from "lodash";
 
 export function useUserManagement(locale: string) {
-  // Pagination and data state
   const [paginatedData, setPaginatedData] = useState<PaginatedUsers | null>(
     null
   );
@@ -16,7 +15,6 @@ export function useUserManagement(locale: string) {
   const [pageSize, setPageSize] = useState(10);
   const [loading, setLoading] = useState(true);
 
-  // User management state
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<Users | undefined>();
 
@@ -31,10 +29,8 @@ export function useUserManagement(locale: string) {
     id: null,
   });
 
-  // Initialize users service
   const usersService = useMemo(() => UsersService.init(locale), [locale]);
 
-  // Debounced fetch users function to prevent multiple rapid calls
   const fetchUsers = useCallback(
     debounce(async (searchQuery: string, page: number, size: number) => {
       setLoading(true);
@@ -55,7 +51,6 @@ export function useUserManagement(locale: string) {
     [usersService]
   );
 
-  // Trigger fetch when relevant parameters change
   useEffect(() => {
     fetchUsers(search, currentPage, pageSize);
   }, [search, currentPage, pageSize, fetchUsers]);
@@ -76,10 +71,10 @@ export function useUserManagement(locale: string) {
           data.id
         )
       );
+      handleOpenChange(false);
       toast({ title: "Success", description: "User created successfully" });
-      // Reset to first page after adding
+      await fetchUsers(search, currentPage, pageSize);
       setCurrentPage(1);
-      fetchUsers(search, currentPage, pageSize);
     } catch (error) {
       toast({
         title: "Error",
@@ -106,8 +101,12 @@ export function useUserManagement(locale: string) {
             data.id
           )
         );
-        toast({ title: "Success", description: "User updated successfully" });
-        fetchUsers(search, currentPage, pageSize);
+        handleOpenChange(false);
+        toast({
+          title: `Success`,
+          description: `User updated successfully `,
+        });
+        await fetchUsers(search, currentPage, pageSize);
       }
     } catch (error) {
       toast({
@@ -129,7 +128,6 @@ export function useUserManagement(locale: string) {
   ) => {
     setDeleteConfig({
       id,
-
       ...customConfig,
     });
     setDeleteDialogOpen(true);
@@ -140,17 +138,14 @@ export function useUserManagement(locale: string) {
 
     try {
       await usersService.remove(deleteConfig.id);
+
       toast({
         title: "Success",
         description: "User deleted successfully",
       });
-
-      // Reset delete state
+      await fetchUsers(search, currentPage, pageSize);
       setDeleteConfig({ id: null });
       setDeleteDialogOpen(false);
-
-      // Adjust page if needed after deletion
-      fetchUsers(search, currentPage, pageSize);
     } catch (error) {
       toast({
         title: "Error",
@@ -167,7 +162,6 @@ export function useUserManagement(locale: string) {
     }
   };
 
-  // Pagination handlers
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
@@ -182,7 +176,6 @@ export function useUserManagement(locale: string) {
     setCurrentPage(1);
   };
 
-  // User form handlers
   const handleEdit = (user: Users) => {
     setSelectedUser(user);
     setDialogOpen(true);

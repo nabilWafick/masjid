@@ -1,5 +1,3 @@
-import { validate as isUuid, v4 as uuidv4 } from "uuid";
-
 export interface UsersJson {
   id?: string;
   name: string;

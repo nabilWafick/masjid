@@ -54,7 +54,7 @@ class UsersService {
           pageSize ?? ""
         }`
       );
-      console.log("Response", response);
+
       return PaginatedUsers.fromJson(response);
     } catch (error) {
       console.error("Error while updating user", error);

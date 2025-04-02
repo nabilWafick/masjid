@@ -54,7 +54,8 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const userId = params.id;
+    const resolvedParams = await params;
+    const userId = resolvedParams.id;
 
     /*    const token = request.headers.get("authorization")?.split(" ")[1];
 
@@ -219,9 +220,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const userId = params.id;
-
-    /*
+    const userId = (await params).id; /*
     
     const token = request.headers.get("authorization")?.split(" ")[1];
 

@@ -1,3 +1,4 @@
+/*
 "use client";
 
 import React from "react";
@@ -413,3 +414,5 @@ const AdminSermonPage = () => {
 };
 
 export default AdminSermonPage;
+
+*/

@@ -32,9 +32,18 @@ export function UserForm({
   open,
   onOpenChange,
   initialData,
+  onSubmit,
 }: UserFormProps) {
-  const { form, onSubmit, errors, isSubmitting, register, setValue } =
-    useUserForm(locale, initialData, () => onOpenChange(false));
+  const { form, errors, isSubmitting, register, setValue } = useUserForm(
+    locale,
+    initialData
+  );
+
+  const handleFormSubmit = form.handleSubmit(async (data) => {
+    if (onSubmit) {
+      await onSubmit(data);
+    }
+  });
 
   const isUpdateMode = Boolean(initialData);
 
@@ -47,7 +56,7 @@ export function UserForm({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] bg-muted z-99999 max-h-[700px] overflow-scroll">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleFormSubmit}>
           <DialogHeader>
             <DialogTitle>
               {isUpdateMode ? "Edit User" : "Add New User"}

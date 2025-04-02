@@ -45,7 +45,7 @@ export const DeleteConfirmationDialog: React.FC<
           <AlertDialogAction
             //  variant="destructive"
             onClick={() => {
-              ///  e.preventDefault(); // Prevent default to handle async
+              //  e.preventDefault(); // Prevent default to handle async
               onConfirm();
             }}
           >
